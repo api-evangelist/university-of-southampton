@@ -1,0 +1,104 @@
+---
+aid: university-of-southampton
+name: University of Southampton
+description: >-
+  The University of Southampton is a public research university in Southampton,
+  United Kingdom, ranked #70 in the QS World University Rankings 2025. It is a
+  founding member of the Russell Group and a recognized pioneer of open and
+  linked data in higher education. Its developer/API footprint is centered on
+  the University of Southampton Open Data Service (data.southampton.ac.uk),
+  which publishes campus, building, organizational, catalogue, and facilities
+  data as linked data with a public SPARQL endpoint and multiple
+  machine-readable formats (RDF/XML, Turtle, N-Triples, CSV, KML, ICS). The
+  University is also the home of the EPrints open-source repository platform;
+  its institutional research repository (ePrints Soton) exposes an OAI-PMH
+  metadata harvesting interface. There is no single unified commercial API
+  developer portal; access is open and standards-based rather than
+  key-gated.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Open Data
+  - Linked Data
+  - SPARQL
+  - OAI-PMH
+  - Research
+  - United Kingdom
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-southampton:open-data-sparql
+    name: Open Data Service SPARQL Endpoint
+    description: >-
+      Public SPARQL query endpoint for the University of Southampton Open Data
+      Service, backed by a triple store (Sesame) with an arc2 front end. Allows
+      querying of campus, building, organizational, catalogue, and facilities
+      linked data.
+    humanURL: https://data.southampton.ac.uk/
+    baseURL: https://sparql.data.southampton.ac.uk/
+    tags: [ Open Data, Linked Data, SPARQL, RDF ]
+    properties:
+      - type: Documentation
+        url: https://www.data.southampton.ac.uk/faq.html
+      - type: GitHub
+        url: https://github.com/southampton
+  - aid: university-of-southampton:open-data-linked-data
+    name: Open Data Linked Data (RDF) Service
+    description: >-
+      Linked open data published at data.southampton.ac.uk. Resource pages
+      offer machine-readable representations via content negotiation and
+      "get the data" links in RDF/XML (.rdf), Turtle (.ttl), N-Triples (.nt),
+      and where relevant CSV, KML, ICS, and RSS.
+    humanURL: https://data.southampton.ac.uk/
+    baseURL: https://data.southampton.ac.uk/
+    tags: [ Open Data, Linked Data, RDF, Campus ]
+    properties:
+      - type: Documentation
+        url: https://www.data.southampton.ac.uk/faq.html
+      - type: GitHub
+        url: https://github.com/southampton
+  - aid: university-of-southampton:eprints-oai-pmh
+    name: ePrints Soton OAI-PMH Interface
+    description: >-
+      OAI-PMH metadata harvesting interface for ePrints Soton, the University's
+      institutional research repository, built on the EPrints platform
+      (originally developed at Southampton). The repository is read-only for
+      search and harvesting; new deposits now go through Pure. Note: a direct
+      probe of the OAI-PMH endpoint returned HTTP 403 (likely automated-request
+      filtering); the interface is documented and intended for repository
+      harvesters.
+    humanURL: https://eprints.soton.ac.uk/
+    baseURL: https://eprints.soton.ac.uk/cgi/oai2
+    tags: [ OAI-PMH, Repository, Research, Metadata, EPrints ]
+    properties:
+      - type: Documentation
+        url: https://eprints.soton.ac.uk/
+common:
+  - type: Website
+    url: https://www.southampton.ac.uk/
+  - type: GitHub
+    url: https://github.com/southampton
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-southampton/
+  - type: DeveloperPortal
+    url: https://data.southampton.ac.uk/
+  - type: SourceCode
+    url: https://github.com/southampton
+  - type: Plans
+    url: plans/university-of-southampton-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-southampton-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-southampton-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

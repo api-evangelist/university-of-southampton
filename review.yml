@@ -1,0 +1,44 @@
+---
+name: University of Southampton
+description: University of Southampton public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Southampton has a genuine, standards-based open-data footprint rather
+      than a commercial key-gated developer portal. The Open Data Service
+      website and its public SPARQL endpoint both resolved live (HTTP 200), as
+      did the ePrints Soton repository and the official github.com/southampton
+      Open Data org. The ePrints OAI-PMH endpoint is documented but returned
+      HTTP 403 to automated probes (likely bot filtering), so it is cataloged
+      honestly as documented-but-not-verified-live. No fabricated endpoints,
+      keys, or pricing were added; the plans/rate-limits/finops files were left
+      as pre-populated.
+    endpoints:
+      - url: https://www.southampton.ac.uk/
+        status: 200
+        note: Official university website, resolved.
+      - url: https://data.southampton.ac.uk/
+        status: 200
+        note: Open Data Service portal, live.
+      - url: https://sparql.data.southampton.ac.uk/
+        status: 200
+        note: Public SPARQL endpoint, resolved; accepted a test query (200).
+      - url: https://eprints.soton.ac.uk/
+        status: 200
+        note: ePrints Soton institutional repository, live (search only).
+      - url: https://eprints.soton.ac.uk/cgi/oai2
+        status: 403
+        note: OAI-PMH interface documented; probe (incl. verb=Identify) returned 403, likely automated-request filtering.
+      - url: https://github.com/southampton
+        status: 200
+        note: Official Open Data Service GitHub org, resolved.
+      - url: https://www.linkedin.com/school/university-of-southampton/
+        status: 999
+        note: LinkedIn school page; 999 is LinkedIn anti-bot status, page exists.
+      - url: https://www.data.southampton.ac.uk/faq.html
+        status: 200
+        note: Open data FAQ / technical documentation, live.
