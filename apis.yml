@@ -99,6 +99,14 @@ common:
     url: finops/university-of-southampton-finops.yml
   - type: Review
     url: review.yml
+  - type: Blog
+    url: https://blog.soton.ac.uk/data/
+  - type: BlogRSS
+    url: https://blog.soton.ac.uk/data/feed/
+  - type: x-blogs
+    url: blogs/blogs.json
+  - type: x-json-ld
+    url: json-ld/university-of-southampton-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
