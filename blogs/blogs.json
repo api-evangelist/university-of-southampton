@@ -2,13 +2,20 @@
   "repo": "university-of-southampton",
   "feeds": [
     {
+      "source": "https://blog.soton.ac.uk/data/feed/",
+      "feed_url": "https://blog.soton.ac.uk/data/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://blog.soton.ac.uk/data/",
       "feed_url": "https://blog.soton.ac.uk/data/feed/",
-      "title": "Southampton Open Data Blog",
+      "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "discovered"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-03T00:00:00Z"
+  "fetched": "2026-06-14T20:42:17Z"
 }
