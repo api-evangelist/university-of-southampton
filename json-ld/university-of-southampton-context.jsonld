@@ -51,7 +51,7 @@
   "name": "University of Southampton",
   "url": "https://www.southampton.ac.uk/",
   "description": "Public research university in Southampton, United Kingdom, and a pioneer of open and linked data in higher education via its Open Data Service.",
-  "logo": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg",
+  "logo": "https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg",
   "sameAs": [
     "https://www.linkedin.com/school/university-of-southampton/",
     "https://github.com/southampton"
