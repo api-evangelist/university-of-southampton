@@ -81,6 +81,8 @@ apis:
       - type: Documentation
         url: https://eprints.soton.ac.uk/
 common:
+  - type: DomainSecurity
+    url: security/university-of-southampton-domain-security.yml
   - type: Website
     url: https://www.southampton.ac.uk/
   - type: GitHub
