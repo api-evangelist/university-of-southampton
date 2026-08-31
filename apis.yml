@@ -1,21 +1,134 @@
----
 aid: university-of-southampton
 name: University of Southampton
-description: >-
-  The University of Southampton is a public research university in Southampton,
-  United Kingdom, ranked #70 in the QS World University Rankings 2025. It is a
-  founding member of the Russell Group and a recognized pioneer of open and
-  linked data in higher education. Its developer/API footprint is centered on
-  the University of Southampton Open Data Service (data.southampton.ac.uk),
-  which publishes campus, building, organizational, catalogue, and facilities
-  data as linked data with a public SPARQL endpoint and multiple
-  machine-readable formats (RDF/XML, Turtle, N-Triples, CSV, KML, ICS). The
-  University is also the home of the EPrints open-source repository platform;
-  its institutional research repository (ePrints Soton) exposes an OAI-PMH
-  metadata harvesting interface. There is no single unified commercial API
-  developer portal; access is open and standards-based rather than
-  key-gated.
+description: |-
+  The University of Southampton is a public research university in Southampton, United Kingdom, a founding member of the Russell Group and one of the few institutions in this cohort whose programmable footprint is genuinely its own engineering rather than a supplier's contract running under its name.
+
+  Four institution-operated surfaces were found and verified by live probe on 2026-08-30. The University of Southampton Open Data Service at data.southampton.ac.uk, with persistent identifiers under id.southampton.ac.uk, publishes twenty-two datasets of campus, building, organisational, catalogue, transport and facilities data as five-star linked data under the Open Government Licence, reachable by content negotiation in Turtle, RDF/XML and N-Triples and by bulk dump per dataset. It is institution-built on tooling Southampton wrote, and it covers the campus-life and timetable classes that universities operate and almost never publish. The University runs its own Shibboleth 3.x SAML 2.0 Identity Provider, entityID https://webauth.soton.ac.uk/shibboleth, scope soton.ac.uk, registered in the Jisc UK Access Management Federation and reachable through eduGAIN. ePrints Soton, the institutional research repository, exposes a live open OAI-PMH 2.0 interface offering eight metadata formats including RIOXX v2.0, plus a read REST interface over the EPrints data model; the platform is EPrints 3.3.15, software developed at Southampton itself, so uniquely in this cohort neither the host nor the repository software belongs to a vendor. The University is a DataCite member in its own right with 6,735 DOIs minted under its own prefix 10.5258, and a Crossref member under prefix 10.22493.
+
+  Two further surfaces are real but tenant-operated and are recorded as relationships without holding the supplier's specification: the Elsevier Pure CRIS tenancy at pure.soton.ac.uk, which is now the system of record for research deposit and whose public web services are switched off, and the Figshare research data tenancy at southampton.figshare.com.
+
+  One prominent claim in the previous profile of this institution is now false and has been withdrawn. The public SPARQL endpoint at sparql.data.southampton.ac.uk is decommissioned: it answers every request with HTTP 200 and the body "Sorry, We no longer off a public SPARQL interface to Southampton Open Data", and the Open Data catalogue's own VoID metadata still advertises it. There is no central developer portal, no api.southampton.ac.uk and no public course, registrar or research-computing API. Access across the estate is open and standards-based rather than key-gated, and no surface publishes a version, changelog, status page or deprecation signal.
 type: Index
+x-type: university
+x-category: Public Research University
+x-coverage:
+  state: covered
+  reason: covered
+  assessed: '2026-08-30'
+  method: pipeline-university + live probe
+  institution_surfaces: 4
+  tenant_surfaces: 2
+  tenant_hosts: 2
+  contracts_saved: 3
+  vendor_surfaces_removed: 0
+  dead_surfaces_removed: 1
+  detail: |-
+    Four institution-operated surfaces found and verified by live probe on 2026-08-30, and three contracts written from those probes and saved. Southampton is a genuine outlier in this cohort: its principal surfaces are its own engineering, not a supplier's. The Open Data Service (data.southampton.ac.uk / id.southampton.ac.uk, both in the University's own JANET address space) publishes twenty-two datasets as five-star linked data under the Open Government Licence, with content negotiation exercised end to end rather than merely linked. The Shibboleth 3.x SAML 2.0 Identity Provider (entityID https://webauth.soton.ac.uk/shibboleth, scope soton.ac.uk) was retrieved both from the IdP itself and, signed, from the Jisc UK Access Management Federation MDQ service; it was entirely absent from the previous profile and is the single largest addition of this run. ePrints Soton offers a live OAI-PMH 2.0 interface with eight metadata formats and a read REST interface, on the institution's own host running EPrints 3.3.15 — software developed at Southampton, so uniquely in this cohort the repository platform is not a vendor's either.
+
+    Two surfaces are real but tenant-operated and are recorded as relationships without holding the supplier's specification: the Elsevier Pure CRIS tenancy (pure.soton.ac.uk CNAME soton.elsevierpure.com) and the Figshare research data tenancy (southampton.figshare.com CNAME figshare.com). Southampton's Pure tenancy is more closed than several peers': /ws/oai and /ws/api both return 403.
+
+    One previously claimed surface was withdrawn as dead. sparql.data.southampton.ac.uk was recorded as the institution's flagship public SPARQL endpoint; it is decommissioned and returns HTTP 200 with the body "Sorry, We no longer off a public SPARQL interface to Southampton Open Data" for every method and scheme. It is a soft-200, invisible to status-code monitoring, and the Open Data catalogue's own VoID metadata still advertises it via void:sparqlEndpoint. One further stale claim was corrected: the OAI-PMH endpoint was recorded as returning 403, which was a probe artifact of a browser User-Agent hitting the host's Anubis bot challenge, not a property of the service.
+
+    Six of the twelve education-regime domain standards are evidenced with live probes — oai-pmh, shibboleth, saml, orcid, datacite (6,735 DOIs under the University's own prefix 10.5258) and crossref (member 9786, prefix 10.22493). The profile is thin in the places universities are genuinely thin: no central developer portal, no api.southampton.ac.uk or developer.soton.ac.uk (neither resolves), no public course or registrar API (timetable.soton.ac.uk is behind Microsoft Entra ID), and no research-computing surface — iridis.soton.ac.uk returns 200 but serves an unconfigured default WordPress installation and was rejected as a placeholder. No surface publishes a version, changelog, status page or deprecation signal.
+  evidence:
+  - url: https://data.southampton.ac.uk/
+    status: 200
+  - url: https://data.southampton.ac.uk/datasets.html
+    status: 200
+    note: 22 datasets catalogued.
+  - url: https://data.southampton.ac.uk/dataset/data-catalog.ttl
+    status: 200
+    note: DCAT catalogue, 4244 bytes. Still advertises the retired void:sparqlEndpoint.
+  - url: https://data.southampton.ac.uk/building/94A.ttl
+    status: 200
+    note: text/turtle, 2329 bytes. Content negotiation verified.
+  - url: https://data.southampton.ac.uk/building/94A.rdf
+    status: 200
+    note: application/rdf+xml, 2354 bytes.
+  - url: http://id.southampton.ac.uk/building/94A
+    status: 200
+    note: Persistent URI redirects to the representation host.
+  - url: https://data.southampton.ac.uk/dataset/university-timetable/latest.ttl
+    status: 200
+    note: 166536 bytes. Timetable data as linked data.
+  - url: https://data.southampton.ac.uk/dataset.html
+    status: 404
+    note: Negative probe. Genuine 404, not a soft-404.
+  - url: https://sparql.data.southampton.ac.uk/
+    status: 200
+    note: DEAD. Soft-200 retirement notice on GET and POST, http and https. Removed from the profile.
+  - url: https://webauth.soton.ac.uk/idp/shibboleth
+    status: 200
+    note: IdP-published SAML metadata, application/xml, 16951 bytes.
+  - url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+    status: 200
+    note: Signed federation metadata, 19396 bytes. Saved to this repo.
+  - url: https://webauth.soton.ac.uk/idp/status
+    status: 403
+    note: Access-controlled status handler. Expected on a production IdP.
+  - url: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    note: Harvester User-Agent. Valid OAI-PMH envelope, 4614 bytes.
+  - url: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 401
+    note: Same URL, browser User-Agent. Anubis 1.24.0 challenge. Live and blocked, not dead.
+  - url: https://eprints.soton.ac.uk/cgi/oai2?verb=ListMetadataFormats
+    status: 200
+    note: Eight metadata formats including rioxx and uketd_dc.
+  - url: https://eprints.soton.ac.uk/rest/eprint/498754.xml
+    status: 200
+    note: 5106 bytes of EPrints XML with ORCID iDs and an institution-minted DOI.
+  - url: https://api.datacite.org/providers?query=southampton
+    status: 200
+    note: DataCite provider HXHF, University of Southampton, GB.
+  - url: https://api.datacite.org/dois?query=prefix:10.5258
+    status: 200
+    note: 6,735 DOIs under the University own prefix.
+  - url: https://api.crossref.org/members?query=southampton
+    status: 200
+    note: Crossref member 9786, prefix 10.22493, 25 works.
+  - url: https://pure.soton.ac.uk/ws/oai?verb=Identify
+    status: 403
+    note: Elsevier-branded 403. Tenancy exposes no public OAI-PMH.
+  - url: https://southampton.figshare.com/
+    status: 202
+    note: AWS WAF bot challenge. Live and blocked, not dead.
+  - url: https://iridis.soton.ac.uk/
+    status: 200
+    note: REJECTED as placeholder. Unconfigured default WordPress install, no content.
+  - url: https://timetable.soton.ac.uk/
+    status: 200
+    note: Redirects to Microsoft Entra ID. Institution-operated but auth-gated; no public contract.
+  - url: https://hpc.soton.ac.uk/
+    status: 200
+    note: Redirects to SharePoint behind Entra ID. Not a public research-computing surface.
+  - url: https://www.linkedin.com/school/university-of-southampton/
+    status: 999
+    note: LinkedIn bot challenge. Live and blocked, not dead.
+  - url: https://api.southampton.ac.uk/
+    status: 0
+    note: Does not resolve. No central API host.
+  - url: https://developer.southampton.ac.uk/
+    status: 0
+    note: Does not resolve. No developer portal.
+  - url: https://api.soton.ac.uk/
+    status: 0
+    note: Does not resolve.
+  - url: https://opendata.southampton.ac.uk/
+    status: 0
+    note: Does not resolve. The open data service is at data.southampton.ac.uk.
+  - url: https://courses.southampton.ac.uk/
+    status: 0
+    note: Does not resolve. No public course catalog API.
+  audit_script_caveat: >-
+    audit-university-contracts.py reported this repo as {institution:2, unknown:1} with no tenant hosts,
+    because its verdict is host-name based and the repo held no vendor contracts to catch. Two blind spots
+    showed up here. First, it cannot see a vanity CNAME: pure.soton.ac.uk looks institutional and points
+    at soton.elsevierpure.com, and the tenant relationships it missed were found by DNS. Second, and more
+    important for this cohort, a host-based verdict cannot see that a host is DEAD — sparql.data.southampton.ac.uk
+    was classified institution and is a decommissioned service answering 200. The x-operator values in
+    this file are set from DNS plus each surface's own self-declaration, and liveness from a real request
+    against the surface's own protocol, not from the script.
 deliveryModel:
   model: saas
   open_source: false
@@ -44,94 +157,326 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-southampton.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
-  - University
-  - Open Data
-  - Linked Data
-  - SPARQL
-  - OAI-PMH
-  - Research
-  - United Kingdom
+- University
+- Higher Education
+- Education
+- Russell Group
+- United Kingdom
+- Open Data
+- Linked Data
+- Research Repository
+- Identity Federation
+- OAI-PMH
+- Research
+- Course Catalog
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-southampton:open-data-sparql
-    name: Open Data Service SPARQL Endpoint
-    description: >-
-      Public SPARQL query endpoint for the University of Southampton Open Data
-      Service, backed by a triple store (Sesame) with an arc2 front end. Allows
-      querying of campus, building, organizational, catalogue, and facilities
-      linked data.
-    humanURL: https://data.southampton.ac.uk/
-    baseURL: https://sparql.data.southampton.ac.uk/
-    tags: [ Open Data, Linked Data, SPARQL, RDF ]
-    properties:
-      - type: Documentation
-        url: https://www.data.southampton.ac.uk/faq.html
-      - type: GitHub
-        url: https://github.com/southampton
-  - aid: university-of-southampton:open-data-linked-data
-    name: Open Data Linked Data (RDF) Service
-    description: >-
-      Linked open data published at data.southampton.ac.uk. Resource pages
-      offer machine-readable representations via content negotiation and
-      "get the data" links in RDF/XML (.rdf), Turtle (.ttl), N-Triples (.nt),
-      and where relevant CSV, KML, ICS, and RSS.
-    humanURL: https://data.southampton.ac.uk/
-    baseURL: https://data.southampton.ac.uk/
-    tags: [ Open Data, Linked Data, RDF, Campus ]
-    properties:
-      - type: Documentation
-        url: https://www.data.southampton.ac.uk/faq.html
-      - type: GitHub
-        url: https://github.com/southampton
-  - aid: university-of-southampton:eprints-oai-pmh
-    name: ePrints Soton OAI-PMH Interface
-    description: >-
-      OAI-PMH metadata harvesting interface for ePrints Soton, the University's
-      institutional research repository, built on the EPrints platform
-      (originally developed at Southampton). The repository is read-only for
-      search and harvesting; new deposits now go through Pure. Note: a direct
-      probe of the OAI-PMH endpoint returned HTTP 403 (likely automated-request
-      filtering); the interface is documented and intended for repository
-      harvesters.
-    humanURL: https://eprints.soton.ac.uk/
-    baseURL: https://eprints.soton.ac.uk/cgi/oai2
-    tags: [ OAI-PMH, Repository, Research, Metadata, EPrints ]
-    properties:
-      - type: Documentation
-        url: https://eprints.soton.ac.uk/
+- aid: university-of-southampton:open-data-linked-data
+  name: University of Southampton Open Data Service (Linked Data)
+  description: >-
+    Institution-built, institution-hosted linked open data covering the physical and organisational University:
+    buildings and sites, term dates, organisational structure, research facilities, points of service,
+    products and services, bus information, printers, workstation clusters and opening hours, room bookings,
+    room features and shapes, and the University timetable — twenty-two datasets in all. Persistent URIs
+    live under http://id.southampton.ac.uk/{class}/{id} and redirect to representations on data.southampton.ac.uk,
+    where any generated page is available in machine-readable form by swapping the format extension: .ttl,
+    .rdf, .nt, with .csv, .kml, .ics and RSS where the data suits them. Each dataset also offers a bulk
+    dump at /dataset/{id}/latest.{ext}. A DCAT catalogue describes the whole service and asserts the Open
+    Government Licence and five-star open linked data conformance. Verified live on 2026-08-30: building
+    94A returned 200 text/turtle (2329 bytes) and 200 application/rdf+xml (2354 bytes), the DCAT catalogue
+    returned 200 (4244 bytes), and negative probes against real path shapes returned genuine 404s rather
+    than soft-200s. Caveat: the catalogue's VoID description still advertises void:sparqlEndpoint at sparql.data.southampton.ac.uk,
+    which is retired.
+  humanURL: https://data.southampton.ac.uk/
+  baseURL: https://data.southampton.ac.uk/
+  tags:
+  - Open Data
+  - Linked Data
+  - RDF
+  - DCAT
+  - Campus
+  - Open Government Licence
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-southampton-open-data-linked-data-openapi.yml
+  - type: Documentation
+    url: https://www.data.southampton.ac.uk/faq.html
+  - type: OpenData
+    url: https://data.southampton.ac.uk/datasets.html
+  - type: Vocabulary
+    url: vocabulary/university-of-southampton-vocabulary.yml
+  - type: Rules
+    url: rules/university-of-southampton-rules.yml
+  - type: Errors
+    url: errors/university-of-southampton-errors.yml
+  - type: Lifecycle
+    url: lifecycle/university-of-southampton-lifecycle.yml
+  x-operator: institution
+  x-operator-evidence: >-
+    data.southampton.ac.uk CNAMEs to sni-vserver-02.soton.ac.uk (152.78.118.88) and id.southampton.ac.uk
+    to websites-ecs.soton.ac.uk (152.78.118.28), both in the University's own JANET address space under
+    its own registrable domain. The DCAT record names dcterms:publisher <http://id.southampton.ac.uk/>,
+    typed aiiso:Institution, labelled 'University of Southampton'. The service FAQ states it is built
+    on Sesame, Grinder, rapper, Graphite and sparqllib, with Grinder written for this project at Southampton.
+    No vendor platform is involved.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 200
+    note: >-
+      Content negotiation exercised end to end, not merely linked. .ttl returned text/turtle and .rdf
+      returned application/rdf+xml for a real resource.
+- aid: university-of-southampton:shibboleth-saml-idp
+  name: Shibboleth SAML Identity Provider (UK Access Management Federation)
+  description: >-
+    The University's own Shibboleth 3.x Identity Provider, entityID https://webauth.soton.ac.uk/shibboleth,
+    asserting shibmd:Scope soton.ac.uk. Its entity descriptor is published both by the IdP itself and,
+    signed, through the Jisc UK Access Management Federation MDQ service and onward into eduGAIN — retrieved
+    live on 2026-08-30 (200, application/xml, 16951 bytes direct; 200, application/samlmetadata+xml, 19396
+    bytes signed) and saved to this repo. Carries IDPSSODescriptor, AttributeAuthorityDescriptor and SPSSODescriptor
+    roles, advertising SAML 2.0, SAML 1.1 and the native urn:mace:shibboleth:1.0 profile over HTTP-Redirect,
+    HTTP-POST and HTTP-POST-SimpleSign SSO and SLO bindings, with SOAP AttributeQuery and ArtifactResolution
+    on port 8443. Institution-operated by definition and the most under-catalogued programmable asset
+    a university runs. Note this is not a public developer API: an application cannot obtain an assertion
+    without first being registered as a service provider in the federation, so there is no self-service
+    path.
+  humanURL: https://www.southampton.ac.uk/isolutions/
+  baseURL: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+  tags:
+  - Identity
+  - SSO
+  - SAML
+  - Shibboleth
+  - Federation
+  - eduGAIN
+  properties:
+  - type: Authentication
+    url: authentication/university-of-southampton-authentication.yml
+  - type: IdentityFederation
+    url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+  - type: Conformance
+    url: conformance/university-of-southampton-conformance.yml
+  - type: Scopes
+    url: scopes/university-of-southampton-scopes.yml
+  x-entity-id: https://webauth.soton.ac.uk/shibboleth
+  x-sso-endpoint: https://webauth.soton.ac.uk/idp/profile/SAML2/Redirect/SSO
+  x-operator: institution
+  x-operator-evidence: >-
+    Metadata self-declares mdui:DisplayName and OrganizationName 'University of Southampton', mdui:Description
+    'Shibboleth 3.x IdP for University of Southampton', and shibmd:Scope 'soton.ac.uk'. webauth.soton.ac.uk
+    resolves to 152.78.118.139 in the University's own address space. The signed federation copy corroborates
+    all of it.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 200
+    idp_self_published_status: 200
+    status_handler_status: 403
+    note: >-
+      The /idp/status handler is access-controlled (403), which is correct for a production IdP and is
+      not an outage.
+- aid: university-of-southampton:eprints-oai-pmh
+  name: ePrints Soton OAI-PMH Interface
+  description: |-
+    Live, open OAI-PMH 2.0 metadata harvesting for ePrints Soton, the University's institutional research repository. Verified 2026-08-30: Identify returned repositoryName 'ePrints Soton', repositoryIdentifier eprints.soton.ac.uk, adminEmail eprints@soton.ac.uk, earliestDatestamp 2021-12-11T15:30:50Z, deletedRecord 'persistent' and granularity to the second; ListMetadataFormats offered eight prefixes including rioxx (RIOXX v2.0, the UK research-output profile), uketd_dc, mets, didl and rdf; ListSets and GetRecord both returned real data. Records carry ORCID iDs and institution-minted DataCite DOIs under the University's own 10.5258 prefix. The repository's metadataPolicy grants free re-use of metadata in any medium for not-for-profit purposes with attribution.
+
+    Correction to the previous profile: this endpoint was recorded as returning HTTP 403 and presumed to be filtering automated requests. That was a probe artifact. The host runs Anubis 1.24.0, which challenges browser-like User-Agent strings with 401 and denies crawler agents such as Googlebot with 403, but serves plain and harvester User-Agents normally with 200. The endpoint is live and fully functional.
+  humanURL: https://eprints.soton.ac.uk/
+  baseURL: https://eprints.soton.ac.uk/cgi/oai2
+  tags:
+  - OAI-PMH
+  - Repository
+  - Research
+  - Metadata
+  - EPrints
+  - RIOXX
+  - Open Access
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-southampton-eprints-oai-pmh-openapi.yml
+  - type: ResearchRepository
+    url: https://eprints.soton.ac.uk/
+  - type: Conformance
+    url: conformance/university-of-southampton-conformance.yml
+  - type: Errors
+    url: errors/university-of-southampton-errors.yml
+  - type: Rules
+    url: rules/university-of-southampton-rules.yml
+  x-operator: institution
+  x-operator-evidence: >-
+    eprints.soton.ac.uk resolves to 152.78.118.18 in the University's own JANET allocation. The Identify
+    response self-declares the institution as operator and states the platform is 'eprints server software
+    (EPrints 3.3.15) developed at the University of Southampton'. Unlike every Figshare, Pure, Dataverse
+    and DSpace deployment in this cohort, the repository software here is the institution's own product,
+    so neither host nor platform is a vendor's.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 200
+    browser_user_agent_status: 401
+    crawler_user_agent_status: 403
+    note: Status depends on User-Agent, not on credentials. Grade live. A 401 here means 'you look like
+      a browser'.
+- aid: university-of-southampton:eprints-rest
+  name: ePrints Soton REST Interface
+  description: >-
+    Read-only REST interface over the ePrints Soton data model, exposing the repository's eprint, user
+    and subject datasets. Unauthenticated. Individual records dereference by identifier with a format
+    extension and return native EPrints XML (namespace http://eprints.org/ep2/data/2.0) including nested
+    documents and files with their own stable identifiers. Verified 2026-08-30: the dataset index returned
+    200 (524 bytes) and eprint 498754 returned 200 text/xml (5106 bytes) carrying populated ORCID iDs
+    and the DOI 10.5258/SOTON/WSI-WP013. Treat it as a repository export rather than a designed API —
+    there is no pagination, versioning, rate-limit header or published contract, and the unfiltered listing
+    at /rest/eprint/ streamed past 11 MB without completing at a 25-second timeout. Use OAI-PMH for bulk
+    work. Same Anubis User-Agent gate as the OAI-PMH surface.
+  humanURL: https://eprints.soton.ac.uk/
+  baseURL: https://eprints.soton.ac.uk/rest
+  tags:
+  - Repository
+  - Research
+  - REST
+  - EPrints
+  - Metadata
+  - Open Access
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-southampton-eprints-rest-openapi.yml
+  - type: ResearchRepository
+    url: https://eprints.soton.ac.uk/
+  - type: Rules
+    url: rules/university-of-southampton-rules.yml
+  - type: Errors
+    url: errors/university-of-southampton-errors.yml
+  x-operator: institution
+  x-operator-evidence: >-
+    Same host and same evidence as the OAI-PMH surface: 152.78.118.18 in the University's own address
+    space, running EPrints 3.3.15, software developed at Southampton.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 200
+    record_status: 200
+    unfiltered_listing: 11485184 bytes streamed, incomplete at 25s timeout
+- aid: university-of-southampton:pure-cris-tenancy
+  name: Elsevier Pure CRIS tenancy
+  description: |-
+    The University's tenancy of Elsevier Pure, its Current Research Information System, at pure.soton.ac.uk. Pure is now the system of record: researchers deposit into Pure and outputs flow onward to ePrints Soton for public display, and the University states ePrints is no longer available for login or deposit. All of that is Southampton's data and Southampton's administration on Elsevier's platform under Elsevier's contract, so it is recorded here as a relationship and the supplier's specification is not held under this slug.
+
+    Unlike several peers in this cohort, this tenancy exposes no public web services: both /ws/oai and /ws/api returned HTTP 403 from an Elsevier-branded error page on 2026-08-30, and the portal itself redirects to Microsoft Entra ID SAML sign-in for the University's tenant. The migration of deposit from ePrints to Pure has therefore reduced the institution's public programmable surface rather than increased it.
+  humanURL: https://www.southampton.ac.uk/research/researcher-support/pure.page
+  baseURL: https://pure.soton.ac.uk/
+  tags:
+  - Research
+  - CRIS
+  - Pure
+  - Repository
+  - Metadata
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://www.southampton.ac.uk/research/researcher-support/pure.page
+  - type: ResearchRepository
+    url: https://eprints.soton.ac.uk/
+  - type: Lifecycle
+    url: lifecycle/university-of-southampton-lifecycle.yml
+  x-operator: tenant
+  x-vendor: Elsevier (Pure)
+  x-operator-evidence: >-
+    DNS: pure.soton.ac.uk CNAME soton.elsevierpure.com CNAME eu.prod.elsevierpure.com. The 403 error page
+    is Elsevier-branded, styled with the 'Elsevier Sans' typeface. The institution operates the tenancy;
+    Elsevier operates the platform and authors the contract.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 200
+    ws_oai_status: 403
+    ws_api_status: 403
+    note: Portal 200 is a redirect to login.microsoftonline.com SAML sign-in. No public API surface.
+- aid: university-of-southampton:figshare-tenancy
+  name: Figshare research data repository tenancy
+  description: >-
+    The University's tenancy of Figshare for research data, at southampton.figshare.com. Live and reachable
+    but fronted by an AWS WAF bot challenge — HTTP 202 with header x-amzn-waf-action:challenge and a zero-length
+    body on 2026-08-30, which is live and blocked, not dead. The data and the DOIs are Southampton's;
+    the API is Figshare's generic v2 contract, shared by every customer, and it is deliberately not held
+    under this slug. This is the exact misattribution the university pipeline exists to prevent: one Figshare
+    contract was previously attributed to twenty-five institutions across this cohort.
+  humanURL: https://southampton.figshare.com/
+  baseURL: https://southampton.figshare.com/
+  tags:
+  - Research Data
+  - Repository
+  - Figshare
+  - Open Data
+  - Tenant
+  properties:
+  - type: ResearchRepository
+    url: https://southampton.figshare.com/
+  x-operator: tenant
+  x-vendor: Figshare
+  x-operator-evidence: >-
+    DNS: southampton.figshare.com CNAME figshare.com (34.253.120.123, 3.248.86.171, 34.252.107.212). An
+    institution-specific subdomain on a vendor platform — the textbook tenant shape.
+  x-probe:
+    probed: '2026-08-30'
+    baseURL_status: 202
+    note: AWS WAF bot challenge. Live and blocked, not dead.
 common:
-  - type: DomainSecurity
-    url: security/university-of-southampton-domain-security.yml
-  - type: Website
-    url: https://www.southampton.ac.uk/
-  - type: GitHub
-    url: https://github.com/southampton
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/university-of-southampton/
-  - type: DeveloperPortal
-    url: https://data.southampton.ac.uk/
-  - type: SourceCode
-    url: https://github.com/southampton
-  - type: Plans
-    url: plans/university-of-southampton-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/university-of-southampton-rate-limits.yml
-  - type: FinOps
-    url: finops/university-of-southampton-finops.yml
-  - type: Review
-    url: review.yml
-  - type: Blog
-    url: https://blog.soton.ac.uk/data/
-  - type: BlogRSS
-    url: https://blog.soton.ac.uk/data/feed/
-  - type: x-blogs
-    url: blogs/blogs.json
-  - type: x-json-ld
-    url: json-ld/university-of-southampton-context.jsonld
+- type: Website
+  url: https://www.southampton.ac.uk/
+- type: OpenData
+  url: https://data.southampton.ac.uk/
+- type: Documentation
+  url: https://www.data.southampton.ac.uk/faq.html
+- type: ResearchRepository
+  url: https://eprints.soton.ac.uk/
+- type: IdentityFederation
+  url: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+- type: AIPolicy
+  url: https://www.southampton.ac.uk/about/governance/regulations-policies/policies/using-gen-ai-during-your-studies
+- type: AITooling
+  url: https://ai.southampton.ac.uk/
+- type: GitHubOrganization
+  url: https://github.com/southampton
+- type: SourceCode
+  url: https://github.com/southampton
+- type: LinkedIn
+  url: https://www.linkedin.com/school/university-of-southampton/
+- type: PrivacyPolicy
+  url: https://www.southampton.ac.uk/about/governance/regulations-policies/privacy-policy
+- type: TermsOfService
+  url: https://www.southampton.ac.uk/about/governance/information-publications/publication-scheme
+- type: Support
+  url: https://www.southampton.ac.uk/isolutions/
+- type: Blog
+  url: https://blog.soton.ac.uk/data/
+- type: BlogRSS
+  url: https://blog.soton.ac.uk/data/feed/
+- type: DomainSecurity
+  url: security/university-of-southampton-domain-security.yml
+- type: Plans
+  url: plans/university-of-southampton-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/university-of-southampton-rate-limits.yml
+- type: FinOps
+  url: finops/university-of-southampton-finops.yml
+- type: Authentication
+  url: authentication/university-of-southampton-authentication.yml
+- type: Conformance
+  url: conformance/university-of-southampton-conformance.yml
+- type: Vocabulary
+  url: vocabulary/university-of-southampton-vocabulary.yml
+- type: Rules
+  url: rules/university-of-southampton-rules.yml
+- type: Errors
+  url: errors/university-of-southampton-errors.yml
+- type: Lifecycle
+  url: lifecycle/university-of-southampton-lifecycle.yml
+- type: Scopes
+  url: scopes/university-of-southampton-scopes.yml
+- type: Review
+  url: review.yml
+- type: x-blogs
+  url: blogs/blogs.json
+- type: x-json-ld
+  url: json-ld/university-of-southampton-context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
