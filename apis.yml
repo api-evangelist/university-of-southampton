@@ -241,6 +241,13 @@ apis:
   baseURL: https://pure.soton.ac.uk/
   tags:
   - Research
+  - CRI
+  - Pure
+  - Repository
+  - Metadata
+  - Tenants
+  tags_raw:
+  - Research
   - CRIS
   - Pure
   - Repository
@@ -278,6 +285,12 @@ apis:
   humanURL: https://southampton.figshare.com/
   baseURL: https://southampton.figshare.com/
   tags:
+  - Research Data
+  - Repository
+  - Figshare
+  - Open Data
+  - Tenants
+  tags_raw:
   - Research Data
   - Repository
   - Figshare
@@ -353,6 +366,8 @@ apis:
   humanURL: https://data.southampton.ac.uk/
   baseURL: https://data.southampton.ac.uk/
   tags:
+  - EPrints
+  tags_raw:
   - Eprints
   properties:
   - type: OpenAPI
