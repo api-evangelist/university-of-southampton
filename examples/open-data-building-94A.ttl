@@ -1,0 +1,36 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns0: <http://vocab.deri.ie/rooms#> .
+@prefix ns1: <http://id.southampton.ac.uk/ns/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns2: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix oo: <http://purl.org/openorg/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix ns3: <http://www.w3.org/ns/org#> .
+@prefix ns4: <http://purl.org/vocab/aiiso/schema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<http://id.southampton.ac.uk/building/94A> rdf:type ns0:Building ,
+                                                    ns1:UoSBuilding ;
+                                           rdfs:label "Boat House 1" ;
+                                           ns2:within <http://id.southampton.ac.uk/site/8> ;
+                                           skos:notation "94A"^^<http://id.southampton.ac.uk/ns/building-code-scheme> ;
+                                           oo:formalOrganization <http://id.southampton.ac.uk/> ;
+                                           geo:lat "50.9345"^^<http://www.w3.org/2001/XMLSchema#float> ;
+                                           geo:long "-1.38"^^<http://www.w3.org/2001/XMLSchema#float> ;
+                                           ns1:disabledGoPage <https://www.accessable.co.uk/university-of-southampton/access-guides/boat-house-1> ;
+                                           oo:lacksFeature <http://id.southampton.ac.uk/building/94A#residential> .
+
+<http://id.southampton.ac.uk/site/8> rdf:type ns3:Site ,
+                                              ns1:UoSSite ,
+                                              ns0:Site ;
+                                     rdfs:label "Boat House" .
+
+<http://id.southampton.ac.uk/> rdf:type ns3:Organization ,
+                                        ns4:Institution ,
+                                        ns3:FormalOrganization ,
+                                        foaf:Organization ;
+                               rdfs:label "University of Southampton" .
+
+<http://id.southampton.ac.uk/building/94A#residential> rdf:type ns1:PlaceFeature-ResidentialUse ;
+                                                       rdfs:label "Building 94A is non-residential" .

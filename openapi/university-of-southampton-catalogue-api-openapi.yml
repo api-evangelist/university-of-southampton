@@ -1,0 +1,51 @@
+openapi: 3.2.0
+info:
+  title: University of Southampton Open Data Service (Linked Data)…
+  version: '1.0'
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-source: Derived from live probes of data.southampton.ac.uk and id.southampton.ac.uk on 2026-08-30. URI dereferencing, format-extension content negotiation and dataset dump retrieval were each exercised against the running service. Captured responses are held in examples/open-data-dcat-catalog.ttl, examples/open-data-building-94A.ttl and examples/open-data-building-94A.rdf. The University publishes no OpenAPI description of this service; this document is API Evangelist's, not the institution's.
+  x-operator: institution
+  x-operator-evidence: 'data.southampton.ac.uk is a CNAME to sni-vserver-02.soton.ac.uk (152.78.118.88) and id.southampton.ac.uk to websites-ecs.soton.ac.uk (152.78.118.28) — both inside the University''s own JANET address space and its own registrable domain. The catalogue''s own DCAT record names dcterms:publisher <http://id.southampton.ac.uk/>, typed as an aiiso:Institution labelled "University of Southampton". No vendor platform is involved: the FAQ states the service is built on Sesame, Grinder, rapper, Graphite and sparqllib, with Grinder written for this project at Southampton.'
+  description: 'The University of Southampton Open Data Service, one of the longest-running institutional linked open data programmes in higher education and a genuine outlier in this cohort: it is institution-built, institution-hosted and institution-maintained, with no vendor contract behind it.'
+  contact:
+    name: University of Southampton Open Data Service
+    url: https://data.southampton.ac.uk/
+  license:
+    name: Open Government Licence
+    url: http://reference.data.gov.uk/id/open-government-licence
+servers:
+- url: https://data.southampton.ac.uk
+  description: Representation host. id.southampton.ac.uk URIs redirect here.
+tags:
+- name: Catalogue
+  description: DCAT catalogue of the datasets the service publishes.
+paths:
+  /dataset/data-catalog.ttl:
+    get:
+      operationId: getCatalogTurtle
+      summary: Retrieve the DCAT catalogue description
+      description: 'The catalogue''s own record, as a dcat:Catalog. Verified 2026-08-30: 200, text/turtle, 4244 bytes. Also available as .rdf and .html. Beware the void:sparqlEndpoint assertion it carries — that endpoint is retired.'
+      tags:
+      - Catalogue
+      responses:
+        '200':
+          description: DCAT catalogue in Turtle.
+          content:
+            text/turtle:
+              schema:
+                type: string
+  /datasets.html:
+    get:
+      operationId: listDatasets
+      summary: Human-readable index of all published datasets
+      description: 'Verified 2026-08-30: 200, 14049 bytes, linking 22 dataset URIs under http://id.southampton.ac.uk/dataset/.'
+      tags:
+      - Catalogue
+      responses:
+        '200':
+          description: HTML dataset index.
+          content:
+            text/html:
+              schema:
+                type: string

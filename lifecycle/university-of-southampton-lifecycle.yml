@@ -1,0 +1,124 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Lifecycle state read from live probes on 2026-08-30 plus the institution's own published
+  statements about deposit workflow. Every status below is evidenced.
+summary: >-
+  Southampton's programmable estate is in managed decline at the edges and stable at the core. The
+  Open Data Service still serves everything it ever served except its SPARQL endpoint, which has
+  been retired without a deprecation signal. The research repository has been demoted from a
+  deposit system to a display and harvesting system, with deposit moved onto a vendor platform.
+  No surface publishes a version, a changelog or a deprecation policy.
+
+lifecycle:
+
+- surface: Open Data Service — linked data and dataset dumps
+  status: live
+  x-operator: institution
+  versioning: none published
+  detail: >-
+    Operating since roughly 2011, with the underlying ECS open data work dating to 2006. Twenty-two
+    datasets currently catalogued. Footer copyright reads 2025, indicating recent maintenance. No
+    version identifier, changelog or release feed is exposed; the only currency signal is the
+    /latest.{ext} dump convention, which gives a client the current state but no way to detect that
+    it changed.
+  evidence:
+  - location: https://data.southampton.ac.uk/datasets.html
+    status: 200
+
+- surface: Open Data Service — public SPARQL endpoint
+  status: retired
+  x-operator: institution
+  detail: >-
+    Decommissioned. Retired without an HTTP deprecation signal: the host answers every request
+    method with HTTP 200 and a prose notice rather than 410 Gone, and no Deprecation or Sunset
+    header is present. The catalogue's own VoID metadata still asserts
+    void:sparqlEndpoint <http://sparql.data.southampton.ac.uk/>, so the retirement is not reflected
+    in the machine-readable description of the service. This is the clearest lifecycle defect on
+    the provider and it is invisible to any status-code-based monitor.
+  evidence:
+  - location: https://sparql.data.southampton.ac.uk/
+    status: 200
+    detail: >-
+      Body reads "Sorry, We no longer off a public SPARQL interface to Southampton Open Data".
+      Identical for GET and POST, http and https.
+  - location: https://data.southampton.ac.uk/dataset/data-catalog.ttl
+    status: 200
+    detail: Still advertises the retired endpoint via void:sparqlEndpoint.
+  removed_from_profile: true
+
+- surface: ePrints Soton — OAI-PMH and REST
+  status: live, reduced scope
+  x-operator: institution
+  platform_version: EPrints 3.3.15
+  detail: >-
+    The repository remains live for search, display and harvesting, but deposit has moved to the
+    Elsevier Pure tenancy; the University states that ePrints is no longer available for login or
+    deposit. The read surfaces are unaffected. The OAI-PMH earliestDatestamp of 2021-12-11 shows
+    the harvestable window was reset relatively recently rather than reaching back to the
+    repository's 2000s origins. deletedRecord policy is "persistent", which is the strongest of
+    the three OAI-PMH options and means harvesters can reliably track deletions.
+  evidence:
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    detail: >-
+      earliestDatestamp 2021-12-11T15:30:50Z, deletedRecord persistent, platform self-declared as
+      "EPrints 3.3.15 developed at the University of Southampton".
+
+- surface: Shibboleth SAML Identity Provider
+  status: live
+  x-operator: institution
+  platform_version: Shibboleth 3.x
+  detail: >-
+    Actively maintained and registered in the Jisc UK Access Management Federation, which enforces
+    its own metadata refresh discipline. Shibboleth 3.x is a supported generation. Certificate
+    rotation and endpoint changes propagate through federation metadata rather than through any
+    developer-facing changelog, which is the correct mechanism for this surface class.
+  evidence:
+  - location: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+    status: 200
+
+- surface: Elsevier Pure CRIS tenancy
+  status: live, closed
+  x-operator: tenant
+  detail: >-
+    Now the University's system of record for research outputs. Its public web services are
+    switched off (403 on /ws/oai and /ws/api), so the migration of deposit from ePrints to Pure has
+    reduced rather than increased the institution's public programmable surface. Version lifecycle
+    belongs to Elsevier, not to Southampton.
+  evidence:
+  - location: https://pure.soton.ac.uk/ws/oai?verb=Identify
+    status: 403
+
+- surface: Figshare research data tenancy
+  status: live, challenged
+  x-operator: tenant
+  detail: >-
+    Reachable but behind an AWS WAF bot challenge. Version lifecycle belongs to Figshare.
+  evidence:
+  - location: https://southampton.figshare.com/
+    status: 202
+    detail: x-amzn-waf-action:challenge, zero-length body.
+
+- surface: iridis.soton.ac.uk
+  status: placeholder
+  x-operator: institution
+  detail: >-
+    Resolves and returns HTTP 200, but the content is an unconfigured default WordPress
+    installation — "Sample Page", the Twenty Twenty-Five theme, and "Sorry, but nothing was found"
+    where posts should be. Not a research-computing surface and not recorded as one. Noted here so
+    a future pass does not mistake the 200 for a live service.
+  evidence:
+  - location: https://iridis.soton.ac.uk/
+    status: 200
+
+deprecation_posture:
+  publishes_deprecation_policy: false
+  publishes_changelog: false
+  uses_sunset_headers: false
+  uses_api_versioning: false
+  detail: >-
+    No surface carries a version in its path, a Deprecation or Sunset header, a changelog or a
+    status page. The SPARQL retirement demonstrates the practical cost: a consumer integrating
+    against the published catalogue metadata has no signal that a core capability is gone.

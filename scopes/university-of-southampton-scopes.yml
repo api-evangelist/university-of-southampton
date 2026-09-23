@@ -1,0 +1,69 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Access boundaries observed on 2026-08-30. Recorded because the absence of scopes is itself the
+  finding: none of the University's public surfaces implements an authorization model.
+summary: >-
+  No OAuth scopes, API keys, plans or quotas exist on any institution-operated surface. Access is
+  binary and anonymous — a resource is either open to everyone or closed to everyone. The only
+  authorization model in the estate is SAML attribute release from the Shibboleth IdP, which
+  governs access to licensed resources and internal systems, not to any API.
+
+scopes:
+
+- surface: Open Data Service
+  x-operator: institution
+  model: anonymous_open
+  scopes: []
+  detail: >-
+    Fully open under the Open Government Licence. No key, no registration, no quota, no
+    rate-limit headers observed.
+
+- surface: ePrints Soton OAI-PMH
+  x-operator: institution
+  model: anonymous_open
+  scopes: []
+  detail: >-
+    Open harvesting. The repository's metadataPolicy grants free re-use of metadata for
+    not-for-profit purposes with attribution; its dataPolicy permits transient harvesting of full
+    items but requires permission for permanent harvesting and forbids commercial resale. That is
+    a licence boundary, not a technical scope — it is not enforced by the endpoint.
+  policy_boundaries:
+  - Metadata: free re-use, any medium, attribution via OAI identifier.
+  - Full items: transient robot harvesting permitted; permanent harvesting requires permission.
+  - Full items: commercial resale prohibited without formal permission of copyright holders.
+
+- surface: ePrints Soton REST
+  x-operator: institution
+  model: anonymous_open
+  scopes: []
+  detail: Open read of the eprint, user and subject datasets. No write surface is exposed.
+
+- surface: Shibboleth SAML Identity Provider
+  x-operator: institution
+  model: saml_attribute_release
+  scopes: []
+  detail: >-
+    Authorization is expressed as SAML attribute release policy per registered service provider,
+    negotiated through the Jisc UK Access Management Federation, not as OAuth scopes. The
+    AttributeAuthorityDescriptor exposes SOAP AttributeQuery at
+    https://webauth.soton.ac.uk:8443/idp/profile/SAML2/SOAP/AttributeQuery. An application cannot
+    obtain an assertion or query attributes without first being registered in the federation, so
+    there is no self-service developer path.
+
+- surface: Elsevier Pure tenancy
+  x-operator: tenant
+  model: closed
+  scopes: []
+  detail: >-
+    Public web services return 403. Where Pure's REST API is enabled it is gated by an api-key
+    header, but that is Elsevier's model and it is switched off on this tenancy.
+
+- surface: Figshare tenancy
+  x-operator: tenant
+  model: vendor_managed
+  scopes: []
+  detail: >-
+    Figshare's own OAuth model applies; it is the vendor's authorization surface, not the
+    University's, and no Southampton-specific scope set exists.

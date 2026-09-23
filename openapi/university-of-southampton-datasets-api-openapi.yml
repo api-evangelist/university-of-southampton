@@ -1,0 +1,105 @@
+openapi: 3.2.0
+info:
+  title: University Of Southampton Datasets API
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-operator: institution
+  x-refined-note:
+  - x-operator-evidence differs across the merged source definitions and was not carried
+  - x-source differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Datasets across 2 of this provider''s published API definitions: university-of-southampton-eprints-rest-openapi.yml, university-of-southampton-open-data-linked-data-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://eprints.soton.ac.uk/rest
+  description: ePrints Soton REST base, University of Southampton
+- url: https://data.southampton.ac.uk
+  description: Representation host. id.southampton.ac.uk URIs redirect here.
+tags:
+- name: Datasets
+  description: Enumeration of the repository's exposed datasets.
+paths:
+  /:
+    get:
+      operationId: listDatasets
+      summary: List the datasets this repository exposes
+      description: 'Returns an HTML index naming the available datasets. Verified 2026-08-30: 200, 524 bytes, listing eprint, user and subject.'
+      tags:
+      - Datasets
+      responses:
+        '200':
+          description: HTML index of datasets.
+          content:
+            text/html:
+              schema:
+                type: string
+        '401':
+          description: Anubis proof-of-work bot challenge, keyed off a browser-like User-Agent.
+    servers:
+    - url: https://eprints.soton.ac.uk/rest
+      description: ePrints Soton REST base, University of Southampton
+  /dataset/{datasetId}/latest.{format}:
+    get:
+      operationId: getDatasetDump
+      summary: Retrieve the current bulk dump of one dataset
+      description: Verified 2026-08-30 against data-catalog (200, 46377 bytes), university-timetable (200, 166536 bytes), printers (200, 337978 bytes) and workstation-opening (200, 277689 bytes). Dumps are unpaginated and some are large — bus-info was still streaming past 9.9 MB of a declared 21.1 MB at a 25-second timeout — so clients should stream rather than buffer.
+      tags:
+      - Datasets
+      parameters:
+      - name: datasetId
+        in: path
+        required: true
+        description: Dataset slug as listed in the catalogue.
+        schema:
+          type: string
+          enum:
+          - amenities
+          - building-portals
+          - bus-info
+          - cls-extras
+          - data-catalog
+          - disabledgo
+          - easting-northing
+          - events-diary
+          - facilities
+          - markers
+          - org
+          - photos
+          - places
+          - printers
+          - profile
+          - room-bookings
+          - room-features
+          - room-shapes
+          - services
+          - transport-locations
+          - university-timetable
+          - workstation-clusters
+          - workstation-opening
+      - name: format
+        in: path
+        required: true
+        description: Serialisation to return.
+        schema:
+          type: string
+          enum:
+          - ttl
+          - rdf
+          - nt
+      responses:
+        '200':
+          description: The dataset dump in the requested serialisation.
+          content:
+            text/turtle:
+              schema:
+                type: string
+            application/rdf+xml:
+              schema:
+                type: string
+        '404':
+          description: No such dataset or format. Verified as a genuine 404 rather than a soft-200 — /dataset.html, /buildings.html and /termdates.html each returned 404 with a 3996-byte error body on 2026-08-30.
+    servers:
+    - url: https://data.southampton.ac.uk
+      description: Representation host. id.southampton.ac.uk URIs redirect here.
+x-refined-from:
+- university-of-southampton-eprints-rest-openapi.yml
+- university-of-southampton-open-data-linked-data-openapi.yml

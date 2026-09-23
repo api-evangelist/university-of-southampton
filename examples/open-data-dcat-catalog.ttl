@@ -1,0 +1,66 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns0: <http://www.w3.org/ns/dcat#> .
+@prefix oo: <http://purl.org/openorg/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <http://rdfs.org/ns/void#> .
+@prefix ns2: <http://www.w3.org/ns/org#> .
+@prefix ns3: <http://purl.org/vocab/aiiso/schema#> .
+@prefix ns4: <http://purl.org/xtypes/> .
+
+<http://www.w3.org/ns/dcat#Dataset> rdf:type rdfs:Class ;
+                                    rdfs:label "Dataset" .
+
+<http://id.southampton.ac.uk/dataset/data-catalog> rdf:type ns0:Dataset ,
+                                                            oo:AuthoritativeDataset ,
+                                                            ns0:Catalog ;
+                                                   rdfs:label "Open Data Catalog" ;
+                                                   dcterms:description "A catalog of known open or linked datasets provided by the University of Southampton" ;
+                                                   foaf:homepage <http://data.southampton.ac.uk/> ;
+                                                   ns1:sparqlEndpoint <http://sparql.data.southampton.ac.uk/> ;
+                                                   dcterms:license <http://reference.data.gov.uk/id/open-government-licence> ;
+                                                   dcterms:publisher <http://id.southampton.ac.uk/> ;
+                                                   dcterms:conformsTo <http://purl.org/openorg/opendata-5-star> ;
+                                                   dcterms:title "Open Data Catalog" ;
+                                                   ns0:accessURL <http://data.southampton.ac.uk/datasets.html> ,
+                                                                 <http://id.southampton.ac.uk/dataset/data-catalog/latest.rdf> ,
+                                                                 <http://id.southampton.ac.uk/dataset/data-catalog/latest.ttl> ;
+                                                   ns1:dataDump <http://id.southampton.ac.uk/dataset/data-catalog/latest> ;
+                                                   rdfs:seeAlso <http://id.southampton.ac.uk/dataset/data-catalog/void> .
+
+<http://purl.org/openorg/AuthoritativeDataset> rdf:type rdfs:Class ;
+                                               rdfs:label "Authoritative Dataset" .
+
+<http://www.w3.org/ns/dcat#Catalog> rdf:type rdfs:Class ;
+                                    rdfs:label "Data Catalogue" .
+
+<http://id.southampton.ac.uk/> rdf:type ns2:Organization ,
+                                        ns3:Institution ,
+                                        ns2:FormalOrganization ,
+                                        foaf:Organization ;
+                               rdfs:label "University of Southampton" .
+
+<http://purl.org/openorg/opendata-5-star> rdf:type rdfs:Class ;
+                                          rdfs:label "5 Star Open Linked Data" .
+
+<http://data.southampton.ac.uk/datasets.html> rdf:type ns0:Download ;
+                                              dcterms:format <http://purl.org/xtypes/Format-HTML> .
+
+<http://purl.org/xtypes/Format-HTML> rdf:type rdfs:Class ;
+                                     rdfs:label "HTML" ;
+                                     ns4:hasMimeType "text/html" .
+
+<http://id.southampton.ac.uk/dataset/data-catalog/latest.rdf> rdf:type ns0:Download ;
+                                                              dcterms:format <http://purl.org/xtypes/Format-RDFXML> .
+
+<http://purl.org/xtypes/Format-RDFXML> rdf:type rdfs:Class ;
+                                       rdfs:label "RDF (in XML)" ;
+                                       ns4:hasMimeType "application/rdf+xml" .
+
+<http://id.southampton.ac.uk/dataset/data-catalog/latest.ttl> rdf:type ns0:Download ;
+                                                              dcterms:format <http://purl.org/xtypes/Format-Turtle> .
+
+<http://purl.org/xtypes/Format-Turtle> rdf:type rdfs:Class ;
+                                       rdfs:label "RDF (in Turtle)" ;
+                                       ns4:hasMimeType "text/turtle" .

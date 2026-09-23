@@ -1,0 +1,66 @@
+---
+generated: '2026-08-30'
+method: derived
+source: >-
+  Derived on 2026-08-30 from payloads actually returned by the University's surfaces and saved
+  under examples/. Recorded as a note rather than as JSON Schema documents because none of these
+  surfaces emits JSON.
+summary: >-
+  No JSON Schema artifacts are published here, and none are derived, because Southampton's
+  institution-operated surfaces do not speak JSON. Inventing JSON schemas for them would describe
+  a shape the provider does not serve.
+
+payload_formats_observed:
+
+- surface: Open Data Service
+  media_types:
+  - text/turtle
+  - application/rdf+xml
+  - text/html
+  schema_language: RDF vocabularies and ontologies, not JSON Schema.
+  authoritative_description: >-
+    The semantics are carried by the vocabularies themselves — dcat, void, dcterms, org, aiiso,
+    rooms, oo, geo, skos, foaf and the institution's own http://id.southampton.ac.uk/ns/. These are
+    inventoried in vocabulary/university-of-southampton-vocabulary.yml, which is the correct
+    schema artifact for this surface class.
+  examples:
+  - examples/open-data-dcat-catalog.ttl
+  - examples/open-data-building-94A.ttl
+  - examples/open-data-building-94A.rdf
+
+- surface: ePrints Soton OAI-PMH
+  media_types:
+  - text/xml
+  schema_language: XML Schema
+  authoritative_description: >-
+    Externally governed and already published — the OAI-PMH envelope is described by
+    http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd, and each metadata format declares its own
+    schema in ListMetadataFormats, including
+    http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd for RIOXX v2.0. Restating these as JSON
+    Schema under the institution's slug would be fabrication.
+  examples:
+  - examples/eprints-oai-identify.xml
+  - examples/eprints-oai-listmetadataformats.xml
+  - examples/eprints-oai-getrecord-oai_dc.xml
+
+- surface: ePrints Soton REST
+  media_types:
+  - text/xml
+  schema_language: EPrints native data model, namespace http://eprints.org/ep2/data/2.0
+  authoritative_description: >-
+    The response shape observed live — eprints > eprint > documents > files, each level carrying
+    its own identifier and rev_number — is modelled in the components section of
+    openapi/university-of-southampton-eprints-rest-openapi.yml, scoped to the fields the service
+    actually returned rather than the full EPrints schema.
+  examples:
+  - examples/eprints-rest-eprint-498754.xml
+
+- surface: Shibboleth SAML Identity Provider
+  media_types:
+  - application/samlmetadata+xml
+  - application/xml
+  schema_language: SAML 2.0 metadata XML Schema
+  authoritative_description: >-
+    Governed by OASIS, not by the institution. The retrieved instance document is held at
+    authentication/university-of-southampton-saml-idp-metadata.xml and its endpoint bindings are
+    tabulated in authentication/university-of-southampton-authentication.yml.

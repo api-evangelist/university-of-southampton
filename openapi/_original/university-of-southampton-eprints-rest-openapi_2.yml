@@ -1,0 +1,129 @@
+# x-archived-from: university-of-southampton-eprints-rest-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.1.0
+info:
+  title: ePrints Soton REST Interface
+  version: '2.0'
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-source: >-
+    Derived from live probes of https://eprints.soton.ac.uk/rest/ on 2026-08-30. The dataset index,
+    the eprint dataset listing and a single-record retrieval were each exercised against the running
+    service. A captured record is held in examples/eprints-rest-eprint-498754.xml. The University
+    publishes no OpenAPI description of this interface; this document is API Evangelist's.
+  x-operator: institution
+  x-operator-evidence: >-
+    Same host and same evidence as the OAI-PMH surface: eprints.soton.ac.uk resolves to
+    152.78.118.18 in the University's own address space, and the platform is EPrints 3.3.15,
+    software developed at the University of Southampton itself.
+  description: >-
+    The EPrints REST interface exposed by ePrints Soton, the University of Southampton's
+    institutional research repository. It publishes the repository's internal data model directly:
+    /rest/ enumerates the datasets (eprint, user, subject) and each dataset can be dereferenced by
+    identifier with a format extension.
+
+    This is a read surface with no authentication and no API key, and it returns the native EPrints
+    XML data model (namespace http://eprints.org/ep2/data/2.0) rather than a REST-styled JSON
+    resource. Consumers should treat it as a repository export rather than a designed public API:
+    there is no pagination, no rate-limit header, no versioning and no published contract, and the
+    unfiltered dataset listing at /rest/eprint/ returns an HTML index that exceeded 11 MB and had
+    not completed within a 25-second timeout when probed. Retrieve individual records by identifier;
+    for bulk work use the OAI-PMH surface, which is designed for it.
+
+    The same Anubis bot challenge that fronts the OAI-PMH endpoint fronts this one, with the same
+    User-Agent-keyed behaviour.
+  contact:
+    name: ePrints Soton
+    email: eprints@soton.ac.uk
+    url: https://eprints.soton.ac.uk/
+servers:
+  - url: https://eprints.soton.ac.uk/rest
+    description: ePrints Soton REST base, University of Southampton
+tags:
+  - name: Datasets
+    description: Enumeration of the repository's exposed datasets.
+  - name: Eprints
+    description: Individual repository records.
+paths:
+  /:
+    get:
+      operationId: listDatasets
+      summary: List the datasets this repository exposes
+      description: >-
+        Returns an HTML index naming the available datasets. Verified 2026-08-30: 200,
+        524 bytes, listing eprint, user and subject.
+      tags: [ Datasets ]
+      responses:
+        '200':
+          description: HTML index of datasets.
+          content:
+            text/html:
+              schema:
+                type: string
+        '401':
+          description: Anubis proof-of-work bot challenge, keyed off a browser-like User-Agent.
+  /eprint/{eprintid}.xml:
+    get:
+      operationId: getEprintXml
+      summary: Retrieve one repository record as EPrints XML
+      description: >-
+        Returns the native EPrints data model for a single record, including nested documents and
+        files with their own stable identifiers. Verified 2026-08-30 against eprint 498754:
+        200, text/xml, 5106 bytes.
+      tags: [ Eprints ]
+      parameters:
+        - name: eprintid
+          in: path
+          required: true
+          description: Numeric EPrints record identifier.
+          schema:
+            type: integer
+            examples: [ 498754 ]
+      responses:
+        '200':
+          description: An EPrints XML document.
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/Eprints'
+        '404':
+          description: No such record.
+        '401':
+          description: Anubis proof-of-work bot challenge, keyed off a browser-like User-Agent.
+components:
+  schemas:
+    Eprints:
+      type: object
+      description: >-
+        Root of the EPrints data model, namespace http://eprints.org/ep2/data/2.0. Field set below
+        is what the live service returned, not the full EPrints schema.
+      properties:
+        eprint:
+          $ref: '#/components/schemas/Eprint'
+    Eprint:
+      type: object
+      properties:
+        eprintid:
+          type: integer
+        rev_number:
+          type: integer
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+    Document:
+      type: object
+      properties:
+        docid:
+          type: integer
+        rev_number:
+          type: integer
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+    File:
+      type: object
+      properties:
+        fileid:
+          type: integer

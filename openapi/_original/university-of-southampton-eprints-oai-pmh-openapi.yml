@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  title: ePrints Soton OAI-PMH Interface
+  version: '2.0'
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-source: >-
+    Derived from live probes of https://eprints.soton.ac.uk/cgi/oai2 on 2026-08-30. Every operation,
+    parameter and response below was exercised against the running service with a non-browser
+    User-Agent; nothing is assumed from the OAI-PMH specification alone. Captured responses are held
+    in examples/eprints-oai-identify.xml, examples/eprints-oai-listmetadataformats.xml and
+    examples/eprints-oai-getrecord-oai_dc.xml. The University of Southampton does not publish an
+    OpenAPI description of this endpoint; this document is API Evangelist's, not the institution's.
+  x-operator: institution
+  x-operator-evidence: >-
+    eprints.soton.ac.uk resolves to 152.78.118.18, inside the University's own JANET allocation.
+    The Identify response self-declares repositoryName "ePrints Soton", repositoryIdentifier
+    "eprints.soton.ac.uk" and adminEmail eprints@soton.ac.uk, and states the system runs
+    "eprints server software (EPrints 3.3.15) developed at the University of Southampton".
+    Unusually for this cohort the repository software is the institution's own product, not a
+    supplier's, so neither the host nor the platform is a vendor.
+  description: >-
+    OAI-PMH 2.0 metadata harvesting interface for ePrints Soton, the University of Southampton's
+    institutional research repository. Live and fully functional. Deposit now happens through the
+    Elsevier Pure tenancy and flows into ePrints for public display, but the harvesting surface
+    itself is institution-operated and openly readable.
+
+    Two behaviours matter to a machine client. First, the host sits behind an Anubis
+    proof-of-work bot challenge that keys off User-Agent: a browser-like User-Agent receives
+    HTTP 401 with a challenge page, while a plain or harvester User-Agent is served normally with
+    HTTP 200. A previous profile of this repository recorded the endpoint as returning 403; that
+    was an artifact of probing with a browser User-Agent, not a property of the service.
+    Second, /robots.txt disallows /cgi/, so the harvesting interface is deliberately excluded
+    from crawlers while remaining open to OAI-PMH harvesters.
+
+    The metadata is explicitly reusable: the repository's own metadataPolicy states that anyone may
+    access the metadata free of charge and re-use it in any medium without prior permission for
+    not-for-profit purposes.
+  contact:
+    name: ePrints Soton
+    email: eprints@soton.ac.uk
+    url: https://eprints.soton.ac.uk/
+  license:
+    name: Repository metadata policy (free re-use, attribution via OAI identifier)
+    url: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+servers:
+  - url: https://eprints.soton.ac.uk/cgi
+    description: ePrints Soton OAI-PMH base URL, University of Southampton
+tags:
+  - name: OAI-PMH
+    description: Open Archives Initiative Protocol for Metadata Harvesting, version 2.0.
+paths:
+  /oai2:
+    get:
+      operationId: oaiRequest
+      summary: Issue an OAI-PMH request
+      description: >-
+        Single-endpoint protocol. The `verb` parameter selects the operation; the remaining
+        parameters are conditional on the verb. Verified live for Identify, ListMetadataFormats,
+        ListSets and GetRecord.
+      tags: [ OAI-PMH ]
+      parameters:
+        - name: verb
+          in: query
+          required: true
+          description: The OAI-PMH operation to perform.
+          schema:
+            type: string
+            enum:
+              - Identify
+              - ListMetadataFormats
+              - ListSets
+              - ListIdentifiers
+              - ListRecords
+              - GetRecord
+        - name: metadataPrefix
+          in: query
+          required: false
+          description: >-
+            Metadata format to return. Required for GetRecord, ListRecords and ListIdentifiers.
+            The eight prefixes enumerated here were read from a live ListMetadataFormats response
+            on 2026-08-30, not from the protocol default set.
+          schema:
+            type: string
+            enum: [ oai_dc, rioxx, uketd_dc, mets, didl, rdf, oai_bibl, oai_dc_ebsco ]
+        - name: identifier
+          in: query
+          required: false
+          description: >-
+            OAI identifier of a single record. Required for GetRecord. Scheme `oai`, repository
+            identifier `eprints.soton.ac.uk`, delimiter `:` — for example
+            `oai:eprints.soton.ac.uk:498754`.
+          schema:
+            type: string
+            pattern: '^oai:eprints\.soton\.ac\.uk:[0-9]+$'
+        - name: set
+          in: query
+          required: false
+          description: >-
+            Restrict a listing to one set. ePrints encodes setSpec values as hexadecimal of the
+            underlying field expression, so the values are opaque and must be read from ListSets
+            rather than constructed.
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          description: Lower bound on the record datestamp. Granularity YYYY-MM-DDThh:mm:ssZ.
+          schema:
+            type: string
+            format: date-time
+        - name: until
+          in: query
+          required: false
+          description: Upper bound on the record datestamp. Granularity YYYY-MM-DDThh:mm:ssZ.
+          schema:
+            type: string
+            format: date-time
+        - name: resumptionToken
+          in: query
+          required: false
+          description: Continuation token from a previous incomplete list response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            An OAI-PMH envelope. Note that protocol-level failures are also returned as HTTP 200
+            carrying an `<error>` element with a `code` attribute; HTTP status alone is not a
+            success signal on this API.
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/OAIPMHResponse'
+        '401':
+          description: >-
+            Anubis proof-of-work bot challenge. Returned to browser-like User-Agent strings.
+            The body is an HTML challenge page, not an OAI-PMH envelope. Retry with a plain or
+            harvester User-Agent.
+          content:
+            text/html:
+              schema:
+                type: string
+        '403':
+          description: >-
+            Anubis denial. Returned to User-Agent strings matched as disallowed crawlers,
+            including Googlebot. Distinct from the 401 challenge: no proof-of-work will satisfy it.
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  schemas:
+    OAIPMHResponse:
+      type: object
+      description: Root OAI-PMH envelope, namespace http://www.openarchives.org/OAI/2.0/.
+      properties:
+        responseDate:
+          type: string
+          format: date-time
+        request:
+          type: string
+          format: uri
+        error:
+          $ref: '#/components/schemas/OAIError'
+        Identify:
+          $ref: '#/components/schemas/Identify'
+    OAIError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - badArgument
+            - badResumptionToken
+            - badVerb
+            - cannotDisseminateFormat
+            - idDoesNotExist
+            - noRecordsMatch
+            - noMetadataFormats
+            - noSetHierarchy
+        message:
+          type: string
+    Identify:
+      type: object
+      description: Values below are those the live service returned on 2026-08-30.
+      properties:
+        repositoryName:
+          type: string
+          examples: [ 'ePrints Soton' ]
+        baseURL:
+          type: string
+          format: uri
+          examples: [ 'http://eprints.soton.ac.uk/cgi/oai2' ]
+        protocolVersion:
+          type: string
+          examples: [ '2.0' ]
+        adminEmail:
+          type: string
+          format: email
+          examples: [ 'eprints@soton.ac.uk' ]
+        earliestDatestamp:
+          type: string
+          format: date-time
+          examples: [ '2021-12-11T15:30:50Z' ]
+        deletedRecord:
+          type: string
+          examples: [ 'persistent' ]
+        granularity:
+          type: string
+          examples: [ 'YYYY-MM-DDThh:mm:ssZ' ]

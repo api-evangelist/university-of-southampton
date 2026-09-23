@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type='text/xsl' href='/oai2.xsl' ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2026-08-30T20:43:47Z</responseDate>
+  <request verb="GetRecord" identifier="oai:eprints.soton.ac.uk:498754" metadataPrefix="oai_dc">https://eprints.soton.ac.uk/cgi/oai2</request>
+  <GetRecord>
+    <record>
+    <header>
+      <identifier>oai:eprints.soton.ac.uk:498754</identifier>
+      <datestamp>2025-08-22T02:32:45Z</datestamp>
+      <setSpec>7374617475733D707562</setSpec>
+      <setSpec>74797065733D6D6F6E6F6772617068</setSpec>
+      <setSpec>7374617475733D707562</setSpec>
+      <setSpec>66756C6C746578743D7075626C6963</setSpec></header>
+    <metadata>
+      <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dc:relation>https://eprints.soton.ac.uk/498754/</dc:relation>
+        <dc:title>Policy and guidance on the use of generative artificial intelligence in UK higher education</dc:title>
+        <dc:creator>Awasthi, Arjun</dc:creator>
+        <dc:creator>Gupta, Achala</dc:creator>
+        <dc:description>This paper describes the discussions, contentions, and arguments for and against the use of generative artificial intelligence (GenAI) in Higher Education (HE). It includes an overview of artificial intelligence, synthesises the guidelines and policies on the use of GenAI, and investigates the opportunities to optimise the application of GenAI tools in HE.  We suggest that while there is uncertainty surrounding such tools it is important to look at their potential utility and efficacy.</dc:description>
+        <dc:publisher>University of Southampton</dc:publisher>
+        <dc:date>2025-02-26</dc:date>
+        <dc:type>Monograph</dc:type>
+        <dc:type>NonPeerReviewed</dc:type>
+        <dc:format>text</dc:format>
+        <dc:language>en</dc:language>
+        <dc:rights>cc_by_nc_nd_4</dc:rights>
+        <dc:identifier>https://eprints.soton.ac.uk/498754/1/2025-01_Policy_and_guidance_on_the_use_of_generative_AI_-_FINAL.pdf</dc:identifier>
+        <dc:identifier>          Awasthi, Arjun and Gupta, Achala       (2025)     Policy and guidance on the use of generative artificial intelligence in UK higher education    (WSI White Papers, 2025-01)         Southampton.       University of Southampton 18pp. (doi:10.5258/SOTON/WSI-WP013 &lt;http://dx.doi.org/10.5258/SOTON/WSI-WP013&gt;).        </dc:identifier>
+        <dc:relation>10.5258/SOTON/WSI-WP013</dc:relation>
+        <dc:language>English</dc:language></oai_dc:dc></metadata></record>
+  </GetRecord>
+</OAI-PMH>

@@ -1,0 +1,61 @@
+openapi: 3.2.0
+info:
+  title: University of Southampton Open Data Service (Linked Data)…
+  version: '1.0'
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-source: Derived from live probes of data.southampton.ac.uk and id.southampton.ac.uk on 2026-08-30. URI dereferencing, format-extension content negotiation and dataset dump retrieval were each exercised against the running service. Captured responses are held in examples/open-data-dcat-catalog.ttl, examples/open-data-building-94A.ttl and examples/open-data-building-94A.rdf. The University publishes no OpenAPI description of this service; this document is API Evangelist's, not the institution's.
+  x-operator: institution
+  x-operator-evidence: 'data.southampton.ac.uk is a CNAME to sni-vserver-02.soton.ac.uk (152.78.118.88) and id.southampton.ac.uk to websites-ecs.soton.ac.uk (152.78.118.28) — both inside the University''s own JANET address space and its own registrable domain. The catalogue''s own DCAT record names dcterms:publisher <http://id.southampton.ac.uk/>, typed as an aiiso:Institution labelled "University of Southampton". No vendor platform is involved: the FAQ states the service is built on Sesame, Grinder, rapper, Graphite and sparqllib, with Grinder written for this project at Southampton.'
+  description: 'The University of Southampton Open Data Service, one of the longest-running institutional linked open data programmes in higher education and a genuine outlier in this cohort: it is institution-built, institution-hosted and institution-maintained, with no vendor contract behind it.'
+  contact:
+    name: University of Southampton Open Data Service
+    url: https://data.southampton.ac.uk/
+  license:
+    name: Open Government Licence
+    url: http://reference.data.gov.uk/id/open-government-licence
+servers:
+- url: https://data.southampton.ac.uk
+  description: Representation host. id.southampton.ac.uk URIs redirect here.
+tags:
+- name: Resources
+  description: Dereferenceable resource URIs for campus concepts.
+paths:
+  /building/{buildingCode}.{format}:
+    get:
+      operationId: getBuilding
+      summary: Dereference a campus building URI
+      description: 'Representative of the resource-dereferencing pattern that applies across the whole service. http://id.southampton.ac.uk/building/{code} 303-redirects here. Verified 2026-08-30 against building 94A: .ttl returned 200 text/turtle 2329 bytes and .rdf returned 200 application/rdf+xml 2354 bytes, describing "Boat House 1" with WGS84 coordinates, a building-code notation, its containing site and an accessibility guide link.'
+      tags:
+      - Resources
+      parameters:
+      - name: buildingCode
+        in: path
+        required: true
+        description: University campus building code.
+        schema:
+          type: string
+          examples:
+          - 94A
+      - name: format
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - ttl
+          - rdf
+          - nt
+          - html
+      responses:
+        '200':
+          description: RDF description of the building.
+          content:
+            text/turtle:
+              schema:
+                type: string
+            application/rdf+xml:
+              schema:
+                type: string
+        '404':
+          description: No such building.

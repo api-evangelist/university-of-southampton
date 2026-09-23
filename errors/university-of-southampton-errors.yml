@@ -1,0 +1,94 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Error behaviour observed directly on 2026-08-30 by issuing real failing requests against each
+  institution-operated surface. Nothing here is inferred from a specification.
+summary: >-
+  None of the University's surfaces publishes an error contract. The behaviours below were measured,
+  and two of them will actively mislead a naive client: an OAI-PMH protocol failure arrives as
+  HTTP 200, and a decommissioned service answers HTTP 200 with a prose apology.
+
+errors:
+
+- surface: Open Data Service
+  condition: Unknown path
+  http_status: 404
+  body_type: text/html
+  detail: >-
+    Genuine 404 with a 3996-byte error body. Verified against /dataset.html, /buildings.html and
+    /termdates.html on 2026-08-30. This surface does not soft-404.
+  reliable_signal: true
+
+- surface: Open Data Service — retired SPARQL endpoint
+  condition: Any request to sparql.data.southampton.ac.uk
+  http_status: 200
+  body_type: text/html
+  body: >-
+    "Sorry, We no longer off a public SPARQL interface to Southampton Open Data."
+  detail: >-
+    The most dangerous failure mode on this provider. GET, POST and both http and https schemes all
+    return HTTP 200 carrying a retirement notice rather than 410 Gone or 404. Any liveness check
+    reading status codes alone will grade this endpoint healthy indefinitely. The catalogue's own
+    VoID description still advertises it as void:sparqlEndpoint, so a linked-data agent following
+    the published metadata will be routed straight into it.
+  reliable_signal: false
+  recommendation: >-
+    Treat sparql.data.southampton.ac.uk as dead. Read the body, not the status.
+
+- surface: ePrints OAI-PMH
+  condition: Protocol-level failure (badVerb, badArgument, idDoesNotExist, cannotDisseminateFormat, noRecordsMatch, badResumptionToken)
+  http_status: 200
+  body_type: text/xml
+  detail: >-
+    Standard OAI-PMH behaviour: errors are returned inside the OAI-PMH envelope as an <error>
+    element with a `code` attribute, under HTTP 200. HTTP status is not a success signal on this
+    API — clients must parse for <error>.
+  reliable_signal: false
+
+- surface: ePrints (OAI-PMH and REST)
+  condition: Request carrying a browser-like User-Agent
+  http_status: 401
+  body_type: text/html
+  detail: >-
+    Anubis 1.24.0 proof-of-work challenge page, setting techaro.lol-anubis-auth and
+    techaro.lol-anubis-cookie-verification cookies and embedding an anubis_challenge JSON block
+    (algorithm "fast", difficulty 4). This is anti-scraping, not authentication or an outage.
+    Retry with a plain or harvester User-Agent.
+  reliable_signal: false
+  recommendation: >-
+    A 401 here means "you look like a browser", not "you lack credentials". Grade the host live,
+    not dead.
+
+- surface: ePrints (OAI-PMH and REST)
+  condition: Request carrying a known crawler User-Agent such as Googlebot
+  http_status: 403
+  body_type: text/html
+  detail: Anubis denial page. No proof-of-work will satisfy it; change the User-Agent.
+  reliable_signal: false
+
+- surface: ePrints REST
+  condition: Unfiltered dataset listing at /rest/eprint/
+  http_status: 200
+  body_type: text/html
+  detail: >-
+    Not an error, but a failure mode in practice. The listing is unpaginated and had streamed
+    11,485,184 bytes without completing at a 25-second timeout. Use OAI-PMH with resumptionToken
+    for bulk retrieval.
+  reliable_signal: true
+
+- surface: Elsevier Pure tenancy
+  condition: Any request to /ws/oai or /ws/api
+  http_status: 403
+  body_type: text/html
+  detail: >-
+    Elsevier-branded 403 page (styled with the "Elsevier Sans" typeface). The Pure web services are
+    disabled for public access on this tenancy. A clean, honest refusal.
+  reliable_signal: true
+
+- surface: Shibboleth IdP status handler
+  condition: GET /idp/status
+  http_status: 403
+  body_type: text/html
+  detail: Access-controlled, as expected on a production IdP. Not an outage.
+  reliable_signal: true

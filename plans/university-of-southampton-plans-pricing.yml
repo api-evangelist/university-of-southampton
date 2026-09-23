@@ -4,33 +4,50 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Southampton
 providerId: university-of-southampton
 created: '2026-06-03'
-modified: '2026-06-03'
-reconciled: false
+modified: '2026-08-30'
+generated: '2026-08-30'
+method: probed
+reconciled: true
+source: >-
+  Rewritten on 2026-08-30 from live probes of every institution-operated surface. The previous
+  version, written 2026-06-03 with no recorded authorship, described "library, repository, course,
+  and open-metadata interfaces"; the University operates no public library API and no public course
+  or registrar API, so those were template claims rather than measurements and have been removed.
 tags:
 - Education
 - Higher Education
 - University
 - Plans
+- Open Government Licence
 description: >-
-  University of Southampton is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
+  The University of Southampton sells no API access and publishes no commercial pricing, tier,
+  quota or self-service signup. Every institution-operated surface found on 2026-08-30 is either
+  fully open and anonymous or entirely closed; there is no middle tier and no key to obtain. This
+  is the normal shape for a public research university and it is recorded as a correct measurement,
+  not a gap.
 notes: >-
-  No published per-seat or per-call commercial pricing. "Free / Open" reflects open
-  public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
-  identity rather than payment.
+  Two distinct access models exist, and neither is a commercial plan. "Open" surfaces are readable
+  by anyone with no registration — the Open Data Service under the Open Government Licence, and the
+  ePrints OAI-PMH and REST interfaces under the repository's own metadata policy. "Federated"
+  surfaces are gated by institutional identity through the Jisc UK Access Management Federation, or
+  by the University's Microsoft Entra tenant, which is membership rather than payment. Vendor
+  tenancies (Elsevier Pure, Figshare) carry the supplier's commercial terms, not the University's.
 sources:
-- https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/apis.yml
+- https://data.southampton.ac.uk/dataset/data-catalog.ttl
+- https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+- http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
 plans:
-- id: university-of-southampton-free-open
-  name: Free / Open
+- id: university-of-southampton-open
+  name: Open
   type: free
-  description: Public open APIs (metadata, library, repository, course data) offered at no charge, generally for non-commercial use.
+  description: >-
+    Anonymous, unmetered read access with no registration. Covers the Open Data Service
+    (Open Government Licence, five-star linked data) and the ePrints Soton OAI-PMH and REST
+    interfaces (free metadata re-use for not-for-profit purposes with attribution; permanent
+    harvesting of full items requires permission and commercial resale is prohibited).
   entries:
-  - label: Open API Access
-    name: open_api_access
+  - label: Open Access
+    name: open_access
     type: free
     metric: requests
     limit: -1
@@ -39,16 +56,38 @@ plans:
     unit: 1
     price: '0.00'
     userMultiplied: false
-- id: university-of-southampton-affiliation
-  name: Affiliation / Credentialed
+- id: university-of-southampton-federated
+  name: Federated
   type: free
-  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or federation membership rather than payment.
+  description: >-
+    Access gated by institutional identity rather than payment. The Shibboleth SAML Identity
+    Provider requires prior registration as a service provider in the Jisc UK Access Management
+    Federation; there is no self-service path. Internal systems including the timetable and the
+    research-computing hub sit behind the University's Microsoft Entra tenant.
   entries:
-  - label: Credentialed Access
-    name: credentialed_access
+  - label: Federated Access
+    name: federated_access
     type: free
     metric: requests
     limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: '0.00'
+    userMultiplied: false
+- id: university-of-southampton-vendor-tenancy
+  name: Vendor tenancy (not the University's plan)
+  type: free
+  description: >-
+    Elsevier Pure and Figshare tenancies carry the supplier's commercial terms. Southampton's Pure
+    web services are switched off entirely (403 on /ws/oai and /ws/api). Recorded for completeness;
+    pricing for these belongs to the vendor's own profile, not the institution's.
+  entries:
+  - label: Vendor Terms
+    name: vendor_terms
+    type: free
+    metric: requests
+    limit: 0
     timeFrame: usage
     geo: global
     unit: 1

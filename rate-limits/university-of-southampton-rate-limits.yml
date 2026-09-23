@@ -4,32 +4,83 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Southampton
 providerId: university-of-southampton
 created: '2026-06-03'
-modified: '2026-06-03'
-reconciled: false
+modified: '2026-08-30'
+generated: '2026-08-30'
+method: probed
+reconciled: true
+source: >-
+  Rewritten on 2026-08-30 from live probes of every institution-operated surface. The previous
+  version of this file, written 2026-06-03 with no recorded authorship, described throttling on
+  "OAI-PMH, IIIF, library" endpoints; the University operates no IIIF service and no public library
+  API, so those were template claims rather than measurements and have been removed.
 tags:
 - Education
 - Higher Education
 - University
 - Rate Limiting
 description: >-
-  University of Southampton does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
-sources:
-- https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/apis.yml
+  The University of Southampton publishes no rate-limit policy, no quota and no plan, and no
+  institution-operated surface returned a RateLimit, X-RateLimit or Retry-After header in any probe
+  on 2026-08-30. Access is unmetered and anonymous. The practical constraints on a client are not
+  rate limits at all but two other mechanisms: a proof-of-work bot challenge in front of the
+  repository host, and unpaginated bulk responses that are large enough to constitute a
+  self-limiting resource.
+notes: >-
+  No 429 was observed on any surface. The documented throttled response code below is a
+  convention, not an observation — do not read it as a published policy.
 responseCodes:
   throttled: 429
+  observed_throttling: none
 limits:
-- name: Default
+- name: Open Data Service
   scope: client
-  metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  metric: none published
+  limit: unmetered
+  observed_headers: none
+  notes: >-
+    No rate-limit headers on any response. The real constraint is response size: dataset dumps are
+    unpaginated and vary from 46,377 bytes (data-catalog) to 21,137,305 bytes (bus-info, still
+    streaming at a 25-second timeout). Stream rather than buffer.
+- name: ePrints Soton OAI-PMH
+  scope: client
+  metric: none published
+  limit: unmetered
+  observed_headers: none
+  notes: >-
+    No rate-limit headers. Paging is via the OAI-PMH resumptionToken, which is the protocol's own
+    flow-control mechanism and should be used for any bulk harvest.
+- name: ePrints Soton REST
+  scope: client
+  metric: none published
+  limit: unmetered
+  observed_headers: none
+  notes: >-
+    No rate-limit headers. The unfiltered listing at /rest/eprint/ had streamed 11,485,184 bytes
+    without completing at a 25-second timeout; retrieve records individually by identifier.
+- name: Shibboleth SAML Identity Provider
+  scope: registered service provider
+  metric: not applicable
+  limit: not applicable
+  notes: >-
+    Access is governed by federation registration, not by rate. An unregistered client cannot make
+    a meaningful request at all.
 policies:
+- name: Bot challenge, not a rate limit
+  description: >-
+    eprints.soton.ac.uk runs Anubis 1.24.0 in front of both its OAI-PMH and REST surfaces. It keys
+    off User-Agent rather than request rate: browser-like strings receive HTTP 401 with a
+    proof-of-work challenge, known crawler agents such as Googlebot receive HTTP 403, and plain or
+    harvester User-Agents are served normally with HTTP 200. Backing off will not clear a 401 here;
+    changing the User-Agent will.
+- name: Licence boundary on bulk retrieval
+  description: >-
+    The repository's own dataPolicy permits transient robot harvesting of full items but requires
+    permission for permanent harvesting and prohibits commercial resale. That is a licence
+    constraint, not a technical one, and it is not enforced by the endpoint.
 - name: Backoff Strategy
-  description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.
+  description: >-
+    Exponential backoff with jitter and honouring Retry-After remains the correct default, but note
+    that no Retry-After header was observed on any surface during probing.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

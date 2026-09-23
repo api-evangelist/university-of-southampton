@@ -1,0 +1,209 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Live probes on 2026-08-30 against the Kin Score `education` regime's domain standards list. Every
+  claim below points at a specific fetched location with a status code. Reward-only: standards not
+  evidenced are recorded as not_found rather than assumed.
+regime: education
+regime_id: education
+standards_probed:
+- scim
+- lti
+- oneroster
+- ed-fi
+- caliper
+- qti
+- oai-pmh
+- shibboleth
+- saml
+- orcid
+- datacite
+- crossref
+
+conformance:
+
+- standard: oai-pmh
+  status: conformant
+  x-operator: institution
+  confidence: high
+  summary: >-
+    ePrints Soton runs a live, open OAI-PMH 2.0 repository on the University's own host, offering
+    eight metadata formats.
+  evidence:
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    detail: >-
+      Valid OAI-PMH envelope, 4614 bytes. repositoryName "ePrints Soton", protocolVersion 2.0,
+      repositoryIdentifier eprints.soton.ac.uk, adminEmail eprints@soton.ac.uk, earliestDatestamp
+      2021-12-11T15:30:50Z, deletedRecord persistent, granularity YYYY-MM-DDThh:mm:ssZ. Saved as
+      examples/eprints-oai-identify.xml.
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=ListMetadataFormats
+    status: 200
+    detail: >-
+      Eight prefixes offered — oai_dc, rioxx (RIOXX v2.0, the UK research-output profile), uketd_dc
+      (UK electronic theses), mets, didl, rdf, oai_bibl, oai_dc_ebsco. Saved as
+      examples/eprints-oai-listmetadataformats.xml.
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:eprints.soton.ac.uk:498754
+    status: 200
+    detail: Real record returned. Saved as examples/eprints-oai-getrecord-oai_dc.xml.
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=ListSets
+    status: 200
+    detail: >-
+      Set hierarchy returned. setSpec values are hex-encoded field expressions, so they are opaque
+      and must be read from ListSets rather than constructed.
+  - location: openapi/university-of-southampton-eprints-oai-pmh-openapi.yml
+    status: local
+    detail: Contract derived from these probes.
+  note: >-
+    A previous profile of this repository recorded the OAI-PMH endpoint as returning HTTP 403 and
+    presumed automated-request filtering. That was a probe artifact. The host runs Anubis 1.24.0,
+    which challenges browser-like User-Agent strings (401) and denies known crawler agents such as
+    Googlebot (403), but serves plain and harvester User-Agents normally (200). The standard is
+    conformant and the endpoint is live.
+
+- standard: datacite
+  status: conformant
+  x-operator: institution
+  confidence: high
+  summary: >-
+    The University is a DataCite member in its own right, minting DOIs under its own prefix 10.5258
+    and resolving them to its own repository.
+  evidence:
+  - location: https://api.datacite.org/providers?query=southampton
+    status: 200
+    detail: >-
+      DataCite provider symbol HXHF, name "University of Southampton", country GB.
+  - location: https://api.datacite.org/dois/10.5258/SOTON/WSI-WP013
+    status: 200
+    detail: >-
+      DOI 10.5258/soton/wsi-wp013, prefix 10.5258, publisher "University of Southampton",
+      url https://eprints.soton.ac.uk/498754/ — an institution-minted DOI resolving to the
+      institution's own repository.
+  - location: https://api.datacite.org/dois?query=prefix:10.5258
+    status: 200
+    detail: 6,735 DOIs registered under the University's prefix.
+
+- standard: shibboleth
+  status: conformant
+  x-operator: institution
+  confidence: high
+  summary: >-
+    The University operates its own Shibboleth 3.x Identity Provider, registered in the Jisc UK
+    Access Management Federation and reachable in eduGAIN.
+  evidence:
+  - location: https://webauth.soton.ac.uk/idp/shibboleth
+    status: 200
+    detail: >-
+      EntityDescriptor published by the IdP itself, application/xml, 16951 bytes.
+      mdui:Description reads "Shibboleth 3.x IdP for University of Southampton";
+      shibmd:Scope regexp="false" is soton.ac.uk; protocolSupportEnumeration includes
+      urn:mace:shibboleth:1.0.
+  - location: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+    status: 200
+    detail: >-
+      Signed EntityDescriptor from the UK federation MDQ service, application/samlmetadata+xml,
+      19396 bytes, two ds:Signature blocks. Saved as
+      authentication/university-of-southampton-saml-idp-metadata.xml.
+
+- standard: saml
+  status: conformant
+  x-operator: institution
+  confidence: high
+  summary: >-
+    SAML 2.0 and SAML 1.1 Identity Provider with IDPSSODescriptor, AttributeAuthorityDescriptor and
+    SPSSODescriptor roles, discoverable through federation metadata rather than a developer portal.
+  evidence:
+  - location: https://webauth.soton.ac.uk/idp/shibboleth
+    status: 200
+    detail: >-
+      entityID https://webauth.soton.ac.uk/shibboleth. Advertises
+      urn:oasis:names:tc:SAML:2.0:protocol and urn:oasis:names:tc:SAML:1.1:protocol over
+      HTTP-Redirect, HTTP-POST, HTTP-POST-SimpleSign SSO and SLO bindings, plus SOAP
+      AttributeQuery and ArtifactResolution on port 8443.
+  - location: authentication/university-of-southampton-authentication.yml
+    status: local
+    detail: Full endpoint binding table recorded in the authentication artifact.
+
+- standard: orcid
+  status: conformant
+  x-operator: institution
+  confidence: high
+  summary: >-
+    ORCID iDs are carried as first-class creator identifiers in the institutional repository's
+    machine-readable records.
+  evidence:
+  - location: https://eprints.soton.ac.uk/rest/eprint/498754.xml
+    status: 200
+    detail: >-
+      EPrints XML creator entries carry populated <orcid> elements, e.g. 0000-0002-6285-3565 and
+      0000-0002-3172-8198. Saved as examples/eprints-rest-eprint-498754.xml.
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&metadataPrefix=rioxx&identifier=oai:eprints.soton.ac.uk:498754
+    status: 200
+    detail: RIOXX v2.0 dissemination of the same record retrieved successfully.
+
+- standard: crossref
+  status: conformant
+  x-operator: institution
+  confidence: medium
+  summary: >-
+    The University is a Crossref member and deposits content under its own prefix, though the
+    corpus is small and confined to its own journal publishing.
+  evidence:
+  - location: https://api.crossref.org/members?query=southampton
+    status: 200
+    detail: Crossref member 9786, primary-name "University of Southampton", prefix 10.22493.
+  - location: https://api.crossref.org/prefixes/10.22493/works
+    status: 200
+    detail: >-
+      25 registered works, publisher "University of Southampton" — e.g. 10.22493/meliora.2.1.0019.
+      Confidence is medium rather than high because membership is real but the deposit volume is
+      marginal next to the 6,735 DataCite DOIs; Crossref is not this institution's primary
+      registration agency.
+
+- standard: scim
+  status: not_found
+  confidence: high
+  summary: No SCIM 2.0 provisioning endpoint found on any institution host.
+  evidence:
+  - location: https://webauth.soton.ac.uk/idp/shibboleth
+    status: 200
+    detail: >-
+      Identity metadata advertises SAML profiles only; no SCIM ServiceProviderConfig or /scim/v2
+      surface is published. Provisioning appears to run through the University's Microsoft Entra
+      tenant, which is not publicly described.
+
+- standard: lti
+  status: not_found
+  confidence: medium
+  summary: No public LTI 1.3 platform registration or tool configuration surface found.
+  evidence:
+  - location: https://www.southampton.ac.uk/
+    status: 200
+    detail: >-
+      The VLE is not publicly reachable and publishes no LTI platform configuration. Absence of a
+      public surface is not evidence the University does not use LTI internally.
+
+- standard: oneroster
+  status: not_found
+  confidence: high
+  summary: >-
+    OneRoster is a K-12 rostering standard; no endpoint found, and none expected at a UK research
+    university.
+
+- standard: ed-fi
+  status: not_found
+  confidence: high
+  summary: >-
+    Ed-Fi is a US K-12 data standard; no endpoint found, and none expected at a UK research
+    university.
+
+- standard: caliper
+  status: not_found
+  confidence: medium
+  summary: No Caliper Analytics event store or sensor endpoint found on a public host.
+
+- standard: qti
+  status: not_found
+  confidence: medium
+  summary: No QTI assessment content service found on a public host.

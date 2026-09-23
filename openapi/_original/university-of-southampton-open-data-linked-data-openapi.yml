@@ -1,0 +1,197 @@
+openapi: 3.1.0
+info:
+  title: University of Southampton Open Data Service (Linked Data)
+  version: '1.0'
+  x-generated: '2026-08-30'
+  x-method: derived
+  x-source: >-
+    Derived from live probes of data.southampton.ac.uk and id.southampton.ac.uk on 2026-08-30.
+    URI dereferencing, format-extension content negotiation and dataset dump retrieval were each
+    exercised against the running service. Captured responses are held in
+    examples/open-data-dcat-catalog.ttl, examples/open-data-building-94A.ttl and
+    examples/open-data-building-94A.rdf. The University publishes no OpenAPI description of this
+    service; this document is API Evangelist's, not the institution's.
+  x-operator: institution
+  x-operator-evidence: >-
+    data.southampton.ac.uk is a CNAME to sni-vserver-02.soton.ac.uk (152.78.118.88) and
+    id.southampton.ac.uk to websites-ecs.soton.ac.uk (152.78.118.28) — both inside the University's
+    own JANET address space and its own registrable domain. The catalogue's own DCAT record names
+    dcterms:publisher <http://id.southampton.ac.uk/>, typed as an aiiso:Institution labelled
+    "University of Southampton". No vendor platform is involved: the FAQ states the service is built
+    on Sesame, Grinder, rapper, Graphite and sparqllib, with Grinder written for this project at
+    Southampton.
+  description: >-
+    The University of Southampton Open Data Service, one of the longest-running institutional linked
+    open data programmes in higher education and a genuine outlier in this cohort: it is
+    institution-built, institution-hosted and institution-maintained, with no vendor contract behind
+    it. Southampton's Electronics and Computer Science school has been publishing open data about
+    its own infrastructure since 2006, and this service generalised that to the whole University.
+
+    The programmable model is linked data rather than REST. Every concept has a persistent URI under
+    http://id.southampton.ac.uk/ which 303-redirects to a representation on data.southampton.ac.uk,
+    and every generated page is available in machine-readable form by swapping the format extension:
+    .ttl for Turtle, .rdf for RDF/XML, .nt for N-Triples, with .csv, .kml, .ics and RSS offered where
+    the data suits them. Twenty-two datasets are catalogued, covering buildings and sites, term
+    dates, organisational structure, research facilities, points of service, products and services,
+    bus information, printers, workstation clusters and opening hours, room bookings, room features
+    and shapes, and the University timetable — the campus-life and course-catalogue classes that
+    universities genuinely operate and rarely publish. Each dataset offers a bulk dump at
+    /dataset/{id}/latest.{ext}. Content is licensed under the Open Government Licence and the
+    catalogue asserts conformance to the five-star open linked data model.
+
+    One negative finding is material. The service formerly ran a public SPARQL endpoint at
+    sparql.data.southampton.ac.uk, and the catalogue's own VoID description still advertises it as
+    void:sparqlEndpoint. That endpoint has been decommissioned: every request method returns
+    HTTP 200 with the body "Sorry, We no longer off a public SPARQL interface to Southampton Open
+    Data". Because it answers 200 rather than an error status, automated liveness checks read it as
+    healthy. It is not modelled as an operation here, and any agent following the catalogue's
+    sparqlEndpoint assertion will be misled.
+  contact:
+    name: University of Southampton Open Data Service
+    url: https://data.southampton.ac.uk/
+  license:
+    name: Open Government Licence
+    url: http://reference.data.gov.uk/id/open-government-licence
+servers:
+  - url: https://data.southampton.ac.uk
+    description: Representation host. id.southampton.ac.uk URIs redirect here.
+tags:
+  - name: Catalogue
+    description: DCAT catalogue of the datasets the service publishes.
+  - name: Datasets
+    description: Bulk dataset dumps.
+  - name: Resources
+    description: Dereferenceable resource URIs for campus concepts.
+paths:
+  /dataset/data-catalog.ttl:
+    get:
+      operationId: getCatalogTurtle
+      summary: Retrieve the DCAT catalogue description
+      description: >-
+        The catalogue's own record, as a dcat:Catalog. Verified 2026-08-30: 200,
+        text/turtle, 4244 bytes. Also available as .rdf and .html.
+        Beware the void:sparqlEndpoint assertion it carries — that endpoint is retired.
+      tags: [ Catalogue ]
+      responses:
+        '200':
+          description: DCAT catalogue in Turtle.
+          content:
+            text/turtle:
+              schema:
+                type: string
+  /datasets.html:
+    get:
+      operationId: listDatasets
+      summary: Human-readable index of all published datasets
+      description: >-
+        Verified 2026-08-30: 200, 14049 bytes, linking 22 dataset URIs under
+        http://id.southampton.ac.uk/dataset/.
+      tags: [ Catalogue ]
+      responses:
+        '200':
+          description: HTML dataset index.
+          content:
+            text/html:
+              schema:
+                type: string
+  /dataset/{datasetId}/latest.{format}:
+    get:
+      operationId: getDatasetDump
+      summary: Retrieve the current bulk dump of one dataset
+      description: >-
+        Verified 2026-08-30 against data-catalog (200, 46377 bytes), university-timetable
+        (200, 166536 bytes), printers (200, 337978 bytes) and workstation-opening
+        (200, 277689 bytes). Dumps are unpaginated and some are large — bus-info was still
+        streaming past 9.9 MB of a declared 21.1 MB at a 25-second timeout — so clients should
+        stream rather than buffer.
+      tags: [ Datasets ]
+      parameters:
+        - name: datasetId
+          in: path
+          required: true
+          description: Dataset slug as listed in the catalogue.
+          schema:
+            type: string
+            enum:
+              - amenities
+              - building-portals
+              - bus-info
+              - cls-extras
+              - data-catalog
+              - disabledgo
+              - easting-northing
+              - events-diary
+              - facilities
+              - markers
+              - org
+              - photos
+              - places
+              - printers
+              - profile
+              - room-bookings
+              - room-features
+              - room-shapes
+              - services
+              - transport-locations
+              - university-timetable
+              - workstation-clusters
+              - workstation-opening
+        - name: format
+          in: path
+          required: true
+          description: Serialisation to return.
+          schema:
+            type: string
+            enum: [ ttl, rdf, nt ]
+      responses:
+        '200':
+          description: The dataset dump in the requested serialisation.
+          content:
+            text/turtle:
+              schema:
+                type: string
+            application/rdf+xml:
+              schema:
+                type: string
+        '404':
+          description: >-
+            No such dataset or format. Verified as a genuine 404 rather than a soft-200 —
+            /dataset.html, /buildings.html and /termdates.html each returned 404 with a
+            3996-byte error body on 2026-08-30.
+  /building/{buildingCode}.{format}:
+    get:
+      operationId: getBuilding
+      summary: Dereference a campus building URI
+      description: >-
+        Representative of the resource-dereferencing pattern that applies across the whole
+        service. http://id.southampton.ac.uk/building/{code} 303-redirects here. Verified
+        2026-08-30 against building 94A: .ttl returned 200 text/turtle 2329 bytes and .rdf
+        returned 200 application/rdf+xml 2354 bytes, describing "Boat House 1" with WGS84
+        coordinates, a building-code notation, its containing site and an accessibility guide link.
+      tags: [ Resources ]
+      parameters:
+        - name: buildingCode
+          in: path
+          required: true
+          description: University campus building code.
+          schema:
+            type: string
+            examples: [ '94A' ]
+        - name: format
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [ ttl, rdf, nt, html ]
+      responses:
+        '200':
+          description: RDF description of the building.
+          content:
+            text/turtle:
+              schema:
+                type: string
+            application/rdf+xml:
+              schema:
+                type: string
+        '404':
+          description: No such building.

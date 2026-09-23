@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='utf-8'?>
+<eprints xmlns='http://eprints.org/ep2/data/2.0'>
+  <eprint id='http://eprints.soton.ac.uk/id/eprint/498754'>
+    <eprintid>498754</eprintid>
+    <rev_number>25</rev_number>
+    <documents>
+      <document id='http://eprints.soton.ac.uk/id/document/4085001'>
+        <docid>4085001</docid>
+        <rev_number>2</rev_number>
+        <files>
+          <file id='http://eprints.soton.ac.uk/id/file/23766431'>
+            <fileid>23766431</fileid>
+            <datasetid>document</datasetid>
+            <objectid>4085001</objectid>
+            <filename>2025-01_Policy_and_guidance_on_the_use_of_generative_AI_-_FINAL.pdf</filename>
+            <mime_type>application/pdf</mime_type>
+            <hash>a5355ceb64e4afafd126801955b7746b</hash>
+            <hash_type>MD5</hash_type>
+            <filesize>2221404</filesize>
+            <mtime>2025-08-21 03:53:05</mtime>
+            <url>https://eprints.soton.ac.uk/498754/1/2025-01_Policy_and_guidance_on_the_use_of_generative_AI_-_FINAL.pdf</url>
+          </file>
+        </files>
+        <eprintid>498754</eprintid>
+        <pos>1</pos>
+        <placement>1</placement>
+        <mime_type>application/pdf</mime_type>
+        <format>text</format>
+        <language>en</language>
+        <security>public</security>
+        <license>cc_by_nc_nd_4</license>
+        <main>2025-01_Policy_and_guidance_on_the_use_of_generative_AI_-_FINAL.pdf</main>
+        <content>published</content>
+        <title>2025-01 Policy and guidance on the use of generative AI - FINAL</title>
+      </document>
+    </documents>
+    <eprint_status>archive</eprint_status>
+    <dir>foo/00/49/87/54</dir>
+    <datestamp>2025-02-27 17:30:45</datestamp>
+    <lastmod>2025-08-22 02:32:45</lastmod>
+    <status_changed>2025-02-27 17:30:44</status_changed>
+    <type>monograph</type>
+    <metadata_visibility>show</metadata_visibility>
+    <ispublished>pub</ispublished>
+    <full_text_status>public</full_text_status>
+    <monograph_type>project_report</monograph_type>
+    <keywords>AI, Higher Education, GenAI</keywords>
+    <date>2025-02-26</date>
+    <series>2025-01</series>
+    <publisher>University of Southampton</publisher>
+    <pages>18</pages>
+    <id_number>10.5258/SOTON/WSI-WP013</id_number>
+    <refereed>FALSE</refereed>
+    <divisions>
+      <item>d974ede0-e625-4fb4-b887-df5c46e76920</item>
+      <item>b615f67a-6340-4c1c-a974-75602e52d785</item>
+    </divisions>
+    <locations>
+      <item>
+        <place>Southampton</place>
+        <type>place_of_pub</type>
+      </item>
+    </locations>
+    <series_name>WSI White Papers</series_name>
+    <series_number>2025-01</series_number>
+    <doi>10.5258/SOTON/WSI-WP013</doi>
+    <creators>
+      <item>
+        <name>
+          <family>Awasthi</family>
+          <given>Arjun</given>
+        </name>
+        <id>f6868e60-6497-46e0-9667-2c1ddf65ac11</id>
+        <orcid>0000-0002-6285-3565</orcid>
+        <hidden>FALSE</hidden>
+      </item>
+      <item>
+        <name>
+          <family>Gupta</family>
+          <given>Achala</given>
+        </name>
+        <id>a30fa79d-e9dc-4237-93d4-bdaf8816780a</id>
+        <orcid>0000-0002-3172-8198</orcid>
+        <hidden>FALSE</hidden>
+      </item>
+    </creators>
+    <contributors>
+      <item>
+        <type>http://www.loc.gov/loc.terms/relators/AUT</type>
+        <name>
+          <family>Awasthi</family>
+          <given>Arjun</given>
+        </name>
+        <id>f6868e60-6497-46e0-9667-2c1ddf65ac11</id>
+        <orcid>0000-0002-6285-3565</orcid>
+        <hidden>FALSE</hidden>
+      </item>
+      <item>
+        <type>http://www.loc.gov/loc.terms/relators/AUT</type>
+        <name>
+          <family>Gupta</family>
+          <given>Achala</given>
+        </name>
+        <id>a30fa79d-e9dc-4237-93d4-bdaf8816780a</id>
+        <orcid>0000-0002-3172-8198</orcid>
+        <hidden>FALSE</hidden>
+      </item>
+    </contributors>
+    <title>Policy and guidance on the use of generative artificial intelligence in UK higher education</title>
+    <abstract>This paper describes the discussions, contentions, and arguments for and against the use of generative artificial intelligence (GenAI) in Higher Education (HE). It includes an overview of artificial intelligence, synthesises the guidelines and policies on the use of GenAI, and investigates the opportunities to optimise the application of GenAI tools in HE.  We suggest that while there is uncertainty surrounding such tools it is important to look at their potential utility and efficacy.</abstract>
+    <date_type>published</date_type>
+    <languages_3char>
+      <item>eng</item>
+    </languages_3char>
+    <pure_uuid>404cbd4b-3251-4b16-92f8-783959a51ab2</pure_uuid>
+    <language>English</language>
+    <fp7_type>info:eu-repo/semantics/book</fp7_type>
+    <dates>
+      <item>
+        <date>2025-02-26</date>
+        <date_type>published</date_type>
+      </item>
+    </dates>
+    <hoa_date_pub>2025-02-27</hoa_date_pub>
+    <hoa_date_fcd>2025-02-27</hoa_date_fcd>
+    <hoa_date_foa>2025-02-27</hoa_date_foa>
+    <hoa_version_fcd>VoR</hoa_version_fcd>
+  </eprint>
+</eprints>

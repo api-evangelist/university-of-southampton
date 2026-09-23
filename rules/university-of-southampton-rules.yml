@@ -1,0 +1,123 @@
+---
+generated: '2026-08-30'
+method: derived
+source: >-
+  Consumption rules derived from the live probes recorded in this repository's conformance,
+  errors and lifecycle artifacts, all captured on 2026-08-30. Each rule exists because a probe
+  demonstrated the failure it prevents.
+summary: >-
+  Rules an agent needs to consume Southampton's surfaces correctly. Three of them exist because
+  this provider breaks the ordinary assumption that an HTTP status code tells you what happened.
+
+rules:
+
+- id: soton-001
+  severity: error
+  applies_to: sparql.data.southampton.ac.uk
+  rule: Never treat sparql.data.southampton.ac.uk as a live SPARQL endpoint.
+  rationale: >-
+    The endpoint is decommissioned but answers HTTP 200 with a prose retirement notice for every
+    method and scheme. Status-code monitoring grades it healthy forever.
+  detection: Response body contains "no longer off a public SPARQL interface".
+  evidence: https://sparql.data.southampton.ac.uk/
+
+- id: soton-002
+  severity: error
+  applies_to: data.southampton.ac.uk DCAT/VoID metadata
+  rule: >-
+    Do not follow void:sparqlEndpoint from the Open Data catalogue. The published metadata still
+    advertises the retired endpoint.
+  rationale: >-
+    The machine-readable description of the service is out of date with the service. An agent that
+    trusts the catalogue will route into a dead capability.
+  evidence: https://data.southampton.ac.uk/dataset/data-catalog.ttl
+
+- id: soton-003
+  severity: error
+  applies_to: eprints.soton.ac.uk
+  rule: >-
+    Send a plain or harvester User-Agent, never a browser User-Agent, and never a known crawler
+    User-Agent.
+  rationale: >-
+    Anubis 1.24.0 fronts the host and keys off User-Agent: browser-like strings receive HTTP 401
+    with a proof-of-work challenge, Googlebot receives HTTP 403, and plain or harvester strings are
+    served normally with HTTP 200. A 401 here means "you look like a browser", not "you lack
+    credentials", and the host must be graded live rather than dead.
+  evidence: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+
+- id: soton-004
+  severity: error
+  applies_to: eprints.soton.ac.uk/cgi/oai2
+  rule: Parse the OAI-PMH envelope for an <error> element; do not rely on HTTP status.
+  rationale: >-
+    Protocol failures — badVerb, badArgument, idDoesNotExist, cannotDisseminateFormat,
+    noRecordsMatch, badResumptionToken — are all returned under HTTP 200.
+
+- id: soton-005
+  severity: warning
+  applies_to: eprints.soton.ac.uk/rest
+  rule: Retrieve records individually by identifier; use OAI-PMH for bulk work.
+  rationale: >-
+    The unfiltered listing at /rest/eprint/ is unpaginated and had streamed 11,485,184 bytes
+    without completing at a 25-second timeout. OAI-PMH offers resumptionToken paging for the same
+    corpus.
+
+- id: soton-006
+  severity: warning
+  applies_to: data.southampton.ac.uk dataset dumps
+  rule: Stream dataset dumps rather than buffering them.
+  rationale: >-
+    Dumps are unpaginated and vary widely in size. bus-info was still streaming past 9,928,704
+    bytes of a declared 21,137,305 at a 25-second timeout, while data-catalog completed at 46,377.
+
+- id: soton-007
+  severity: warning
+  applies_to: id.southampton.ac.uk
+  rule: >-
+    Use http://id.southampton.ac.uk/{class}/{id} as the persistent identifier and expect a redirect
+    to data.southampton.ac.uk for the representation.
+  rationale: >-
+    The identifier namespace and the representation host are deliberately separate. Storing the
+    data.southampton.ac.uk URL as the identity of a concept discards that separation.
+
+- id: soton-008
+  severity: warning
+  applies_to: eprints.soton.ac.uk/cgi/oai2 ListSets
+  rule: Read setSpec values from ListSets; never construct them.
+  rationale: >-
+    EPrints hex-encodes the underlying field expression, so setSpec values such as
+    7374617475733D707562 are opaque and cannot be derived from field names.
+
+- id: soton-009
+  severity: info
+  applies_to: all institution surfaces
+  rule: Expect no versioning, changelog, Sunset header or status page.
+  rationale: >-
+    No surface publishes any of these. Consumers must detect change by polling content, and the
+    SPARQL retirement shows the provider will not signal a removal.
+
+- id: soton-010
+  severity: info
+  applies_to: pure.soton.ac.uk, southampton.figshare.com
+  rule: >-
+    Treat Pure and Figshare content as Southampton's data under a vendor's contract; score the
+    contract against the vendor, not the institution.
+  rationale: >-
+    pure.soton.ac.uk CNAMEs to soton.elsevierpure.com and southampton.figshare.com CNAMEs to
+    figshare.com. The data is the University's; the API is not.
+
+- id: soton-011
+  severity: info
+  applies_to: webauth.soton.ac.uk
+  rule: Do not treat the Shibboleth IdP as a consumable developer API.
+  rationale: >-
+    Federated SSO requires prior registration as a service provider in the Jisc UK Access
+    Management Federation. There is no self-service path to an assertion. The IdP's value here is
+    as a machine-readable institutional identity artifact, not as an integration target.
+
+- id: soton-012
+  severity: info
+  applies_to: iridis.soton.ac.uk
+  rule: Do not record iridis.soton.ac.uk as a research-computing surface.
+  rationale: >-
+    It returns HTTP 200 but serves an unconfigured default WordPress installation with no content.

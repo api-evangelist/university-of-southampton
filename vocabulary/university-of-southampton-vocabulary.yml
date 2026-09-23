@@ -1,0 +1,111 @@
+---
+generated: '2026-08-30'
+method: derived
+source: >-
+  Read out of RDF actually returned by data.southampton.ac.uk on 2026-08-30
+  (examples/open-data-building-94A.ttl, examples/open-data-dcat-catalog.ttl) and out of the live
+  OAI-PMH ListMetadataFormats response (examples/eprints-oai-listmetadataformats.xml). These are
+  the namespaces the University's own surfaces emit, not a recommended vocabulary set.
+summary: >-
+  Southampton's programmable surfaces are vocabulary-first rather than schema-first. The Open Data
+  Service reuses established public ontologies wherever one exists and mints its own namespace only
+  for genuinely institution-specific concepts, which is why its data joins up with other
+  institutions' rather than standing alone.
+
+institution_namespace:
+  uri: http://id.southampton.ac.uk/ns/
+  detail: >-
+    The University's own vocabulary, used for concepts no public ontology covers — UoSBuilding,
+    UoSSite, the building-code-scheme datatype, disabledGoPage.
+  observed_terms:
+  - UoSBuilding
+  - UoSSite
+  - building-code-scheme
+  - disabledGoPage
+
+uri_scheme:
+  pattern: http://id.southampton.ac.uk/{class}/{identifier}
+  detail: >-
+    Persistent, opaque-to-representation identifiers that 303-redirect to data.southampton.ac.uk.
+    Classes observed include building, site, dataset.
+  examples:
+  - http://id.southampton.ac.uk/building/94A
+  - http://id.southampton.ac.uk/site/8
+  - http://id.southampton.ac.uk/dataset/data-catalog
+  - http://id.southampton.ac.uk/
+
+reused_vocabularies:
+- prefix: dcat
+  uri: http://www.w3.org/ns/dcat#
+  role: "Dataset and catalogue description. Terms observed: Dataset, Catalog, Download, accessURL."
+- prefix: void
+  uri: http://rdfs.org/ns/void#
+  role: >-
+    Dataset interlinking metadata. Terms observed: sparqlEndpoint, dataDump. Note that the
+    sparqlEndpoint assertion points at a decommissioned service.
+- prefix: dcterms
+  uri: http://purl.org/dc/terms/
+  role: "Descriptive metadata. Terms observed: title, description, publisher, license, format, conformsTo."
+- prefix: org
+  uri: http://www.w3.org/ns/org#
+  role: "Organizational structure. Terms observed: Organization, FormalOrganization, Site."
+- prefix: aiiso
+  uri: http://purl.org/vocab/aiiso/schema#
+  role: >-
+    Academic Institution Internal Structure Ontology. Terms observed: Institution. The
+    higher-education-specific vocabulary in the stack.
+- prefix: rooms
+  uri: http://vocab.deri.ie/rooms#
+  role: "Buildings and rooms. Terms observed: Building, Site."
+- prefix: oo
+  uri: http://purl.org/openorg/
+  role: >-
+    Open Organisation vocabulary, itself a Southampton-adjacent effort. Terms observed:
+    AuthoritativeDataset, formalOrganization, lacksFeature, opendata-5-star.
+- prefix: geo
+  uri: http://www.w3.org/2003/01/geo/wgs84_pos#
+  role: "Coordinates. Terms observed: lat, long."
+- prefix: spatialrelations
+  uri: http://data.ordnancesurvey.co.uk/ontology/spatialrelations/
+  role: >-
+    Ordnance Survey spatial relations, linking campus geography to UK national mapping.
+    Terms observed: within.
+- prefix: skos
+  uri: http://www.w3.org/2004/02/skos/core#
+  role: "Concept notation. Terms observed: notation."
+- prefix: foaf
+  uri: http://xmlns.com/foaf/0.1/
+  role: "Agents and homepages. Terms observed: Organization, homepage."
+- prefix: xtypes
+  uri: http://purl.org/xtypes/
+  role: "Format typing with MIME types. Terms observed: Format-HTML, Format-RDFXML, Format-Turtle, hasMimeType."
+
+repository_metadata_profiles:
+- prefix: oai_dc
+  uri: http://www.openarchives.org/OAI/2.0/oai_dc/
+  role: Simple Dublin Core, the OAI-PMH mandatory format.
+- prefix: rioxx
+  uri: http://www.rioxx.net/schema/v2.0/rioxx/
+  schema: http://www.rioxx.net/schema/v2.0/rioxx/rioxx.xsd
+  role: >-
+    RIOXX v2.0, the UK research-output metadata application profile developed for Jisc to carry
+    funder and open-access compliance data. A genuinely UK-sector-specific standard.
+- prefix: uketd_dc
+  role: UK Electronic Theses and Dissertations Dublin Core profile.
+- prefix: mets
+  role: Metadata Encoding and Transmission Standard.
+- prefix: didl
+  role: MPEG-21 Digital Item Declaration Language.
+- prefix: rdf
+  role: RDF dissemination of repository records.
+- prefix: oai_bibl
+  role: EPrints bibliographic profile.
+- prefix: oai_dc_ebsco
+  role: EBSCO-tuned Dublin Core variant.
+
+licensing:
+  open_data_service: http://reference.data.gov.uk/id/open-government-licence
+  conformance_claim: http://purl.org/openorg/opendata-5-star
+  repository_metadata: >-
+    Free re-use in any medium without prior permission for not-for-profit purposes, attribution via
+    the OAI identifier or a link to the original record, per the repository's own metadataPolicy.

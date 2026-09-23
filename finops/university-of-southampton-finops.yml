@@ -4,7 +4,16 @@ schema: https://www.finops.org/framework/
 provider: University of Southampton
 providerId: university-of-southampton
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
+generated: '2026-08-30'
+method: derived
+source: >-
+  Derived, not published by the institution. The University of Southampton exposes no metered or
+  billed API surface: probes on 2026-08-30 found every institution-operated surface to be
+  anonymous and unmetered, with no plan, quota or rate-limit header anywhere in the estate, so
+  there is no API spend to allocate. Recorded so this artifact is not read as a FinOps disclosure
+  the University made about itself. Provenance stamp added 2026-08-30; the body dates to
+  2026-06-03 and carried no recorded authorship.
 reconciled: false
 tags:
 - Education

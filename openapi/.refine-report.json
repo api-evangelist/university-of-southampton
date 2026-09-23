@@ -1,0 +1,37 @@
+{
+  "provider": "university-of-southampton",
+  "sources": [
+    "_original/university-of-southampton-eprints-oai-pmh-openapi.yml",
+    "_original/university-of-southampton-eprints-rest-openapi.yml",
+    "_original/university-of-southampton-open-data-linked-data-openapi.yml"
+  ],
+  "outputs": [
+    "university-of-southampton-oai-pmh-api-openapi.yml",
+    "university-of-southampton-datasets-api-openapi.yml",
+    "university-of-southampton-eprints-api-openapi.yml",
+    "university-of-southampton-catalogue-api-openapi.yml",
+    "university-of-southampton-resources-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "3 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "university-of-southampton-eprints-oai-pmh-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "university-of-southampton-eprints-rest-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "university-of-southampton-open-data-linked-data-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Datasets' spans 2 source specs (university-of-southampton-eprints-rest-openapi.yml, university-of-southampton-open-data-linked-data-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/university-of-southampton-open-data-linked-data-openapi_2.yml: archived document superseded by a larger archived document",
+    "_original/university-of-southampton-eprints-rest-openapi_2.yml: archived document superseded by a larger archived document",
+    "_original/university-of-southampton-eprints-oai-pmh-openapi_2.yml: archived document superseded by a larger archived document",
+    "university-of-southampton-catalogue-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-southampton-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-southampton-eprints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-southampton-oai-pmh-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-southampton-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

@@ -1,0 +1,127 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Live retrieval of the University's Shibboleth IdP metadata on 2026-08-30, from both the IdP's own
+  publication point (https://webauth.soton.ac.uk/idp/shibboleth, 200, application/xml, 16951 bytes)
+  and the Jisc UK Access Management Federation MDQ service
+  (http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth, 200,
+  application/samlmetadata+xml, 19396 bytes). The federation copy is signed and is saved as
+  authentication/university-of-southampton-saml-idp-metadata.xml. Endpoint bindings below were read
+  out of that document, not assumed from the Shibboleth defaults.
+
+summary: >-
+  The University of Southampton's public programmable surfaces are unauthenticated. The Open Data
+  Service, the ePrints OAI-PMH interface and the ePrints REST interface all require no key, no
+  token and no account. The University's authentication apparatus is federated identity for
+  consuming licensed resources and internal systems, not an API gateway — and the SAML Identity
+  Provider is itself the most substantial machine-readable artifact the institution operates.
+
+authentication:
+
+- surface: Open Data Service (data.southampton.ac.uk / id.southampton.ac.uk)
+  x-operator: institution
+  scheme: none
+  detail: >-
+    Open, anonymous HTTP. No key, no registration, no rate-limit header observed. Licensed under
+    the Open Government Licence.
+  evidence:
+  - location: https://data.southampton.ac.uk/building/94A.ttl
+    status: 200
+    detail: Anonymous request returned 2329 bytes of text/turtle.
+
+- surface: ePrints Soton OAI-PMH (eprints.soton.ac.uk/cgi/oai2)
+  x-operator: institution
+  scheme: none
+  detail: >-
+    Open, anonymous OAI-PMH. No key. Access is however gated by an Anubis proof-of-work bot
+    challenge that keys off User-Agent rather than credentials: a browser-like User-Agent receives
+    HTTP 401 with a challenge page and Googlebot receives HTTP 403, while a plain or harvester
+    User-Agent is served normally with HTTP 200. This is anti-scraping, not authentication, but a
+    client must handle it to reach the data.
+  evidence:
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 200
+    detail: Retrieved with User-Agent "OAIHarvester/2.0"; valid OAI-PMH envelope, 4614 bytes.
+  - location: https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+    status: 401
+    detail: Same URL with a Chrome User-Agent; Anubis 1.24.0 challenge page, techaro.lol cookies set.
+
+- surface: ePrints Soton REST (eprints.soton.ac.uk/rest)
+  x-operator: institution
+  scheme: none
+  detail: Open, anonymous read. Same Anubis User-Agent gate as the OAI-PMH surface.
+  evidence:
+  - location: https://eprints.soton.ac.uk/rest/eprint/498754.xml
+    status: 200
+    detail: Anonymous request returned 5106 bytes of EPrints XML.
+
+- surface: Shibboleth SAML 2.0 Identity Provider
+  x-operator: institution
+  scheme: saml
+  entity_id: https://webauth.soton.ac.uk/shibboleth
+  scope: soton.ac.uk
+  software: Shibboleth 3.x IdP
+  federation: Jisc UK Access Management Federation, onward to eduGAIN
+  detail: >-
+    The University's own IdP, self-declared in metadata as "Shibboleth 3.x IdP for University of
+    Southampton" with OrganizationName "University of Southampton" and shibmd:Scope "soton.ac.uk".
+    It carries IDPSSODescriptor, AttributeAuthorityDescriptor and SPSSODescriptor roles, and
+    advertises SAML 2.0, SAML 1.1 and the native urn:mace:shibboleth:1.0 authn profile. This is
+    federated single sign-on, not a developer API: an application cannot obtain an assertion
+    without first being registered as a service provider in the federation.
+  protocols:
+  - urn:oasis:names:tc:SAML:2.0:protocol
+  - urn:oasis:names:tc:SAML:1.1:protocol
+  - urn:mace:shibboleth:1.0
+  endpoints:
+  - binding: HTTP-Redirect
+    purpose: SingleSignOn
+    location: https://webauth.soton.ac.uk/idp/profile/SAML2/Redirect/SSO
+  - binding: HTTP-POST
+    purpose: SingleSignOn
+    location: https://webauth.soton.ac.uk/idp/profile/SAML2/POST/SSO
+  - binding: HTTP-POST-SimpleSign
+    purpose: SingleSignOn
+    location: https://webauth.soton.ac.uk/idp/profile/SAML2/POST-SimpleSign/SSO
+  - binding: Shibboleth authn request
+    purpose: SingleSignOn
+    location: https://webauth.soton.ac.uk/idp/profile/Shibboleth/SSO
+  - binding: HTTP-Redirect
+    purpose: SingleLogout
+    location: https://webauth.soton.ac.uk/idp/profile/SAML2/Redirect/SLO
+  - binding: SOAP
+    purpose: AttributeQuery
+    location: https://webauth.soton.ac.uk:8443/idp/profile/SAML2/SOAP/AttributeQuery
+  - binding: SOAP
+    purpose: ArtifactResolution
+    location: https://webauth.soton.ac.uk:8443/idp/profile/SAML2/SOAP/ArtifactResolution
+  evidence:
+  - location: https://webauth.soton.ac.uk/idp/shibboleth
+    status: 200
+    detail: >-
+      Unsigned EntityDescriptor published by the IdP itself, application/xml, 16951 bytes.
+  - location: http://mdq.ukfederation.org.uk/entities/https%3A%2F%2Fwebauth.soton.ac.uk%2Fshibboleth
+    status: 200
+    detail: >-
+      Signed EntityDescriptor from the UK federation MDQ service,
+      application/samlmetadata+xml, 19396 bytes. Saved to this repo.
+  - location: https://webauth.soton.ac.uk/idp/status
+    status: 403
+    detail: IdP status handler is access-controlled, as expected for a production deployment.
+
+- surface: Elsevier Pure CRIS tenancy (pure.soton.ac.uk)
+  x-operator: tenant
+  scheme: saml
+  detail: >-
+    Fronted by Microsoft Entra ID for the University's own tenant
+    (4a5378f9-29f4-4d3e-be89-669d03ada9d8). The Pure web services are not publicly reachable:
+    /ws/oai and /ws/api both return HTTP 403 from Elsevier's own error page. Southampton exposes no
+    public Pure API, unlike several peers in this cohort.
+  evidence:
+  - location: https://pure.soton.ac.uk/
+    status: 200
+    detail: Redirects to login.microsoftonline.com SAML2 sign-in for the University's Entra tenant.
+  - location: https://pure.soton.ac.uk/ws/oai?verb=Identify
+    status: 403
+    detail: Elsevier-branded 403 page. No public OAI-PMH on the Pure tenancy.

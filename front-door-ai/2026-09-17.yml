@@ -1,0 +1,29 @@
+# Front Door AI Index — university-of-southampton — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: university-of-southampton
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.southampton.ac.uk
+  final_host: www.southampton.ac.uk
+  ownership: own
+  owner: university-of-southampton
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 16
+  host_score: 16
+  density: 4.15
+  words: 3852
+  tiers:
+    agentic: 0
+    core: 16
+    model: 0
+  ambiguous: 4
+  top_terms:
+    AI: 7
+    machine learning: 6
+    artificial intelligence: 3
+    intelligence: 3
+    smart: 1

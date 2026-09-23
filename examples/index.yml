@@ -1,0 +1,49 @@
+---
+generated: '2026-08-30'
+method: probed
+source: >-
+  Every file in this directory is a verbatim response captured from a live University of
+  Southampton surface on 2026-08-30. Nothing here is synthesised.
+examples:
+- file: eprints-oai-identify.xml
+  request: GET https://eprints.soton.ac.uk/cgi/oai2?verb=Identify
+  user_agent: OAIHarvester/2.0
+  status: 200
+  bytes: 4614
+  media_type: text/xml
+- file: eprints-oai-listmetadataformats.xml
+  request: GET https://eprints.soton.ac.uk/cgi/oai2?verb=ListMetadataFormats
+  user_agent: OAIHarvester/2.0
+  status: 200
+  bytes: 2764
+  media_type: text/xml
+- file: eprints-oai-getrecord-oai_dc.xml
+  request: >-
+    GET https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:eprints.soton.ac.uk:498754
+  user_agent: curl
+  status: 200
+  bytes: 2961
+  media_type: text/xml
+- file: eprints-rest-eprint-498754.xml
+  request: GET https://eprints.soton.ac.uk/rest/eprint/498754.xml
+  user_agent: curl
+  status: 200
+  bytes: 5106
+  media_type: text/xml
+  note: Carries populated ORCID iDs and the institution-minted DOI 10.5258/SOTON/WSI-WP013.
+- file: open-data-dcat-catalog.ttl
+  request: GET https://data.southampton.ac.uk/dataset/data-catalog.ttl
+  status: 200
+  bytes: 4244
+  media_type: text/turtle
+  note: Still advertises the retired void:sparqlEndpoint.
+- file: open-data-building-94A.ttl
+  request: GET https://data.southampton.ac.uk/building/94A.ttl
+  status: 200
+  bytes: 2329
+  media_type: text/turtle
+- file: open-data-building-94A.rdf
+  request: GET https://data.southampton.ac.uk/building/94A.rdf
+  status: 200
+  bytes: 2354
+  media_type: application/rdf+xml
