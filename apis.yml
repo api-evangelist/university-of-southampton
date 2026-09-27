@@ -391,8 +391,8 @@ apis:
 - aid: university-of-southampton:university-of-southampton-oai-pmh-api
   name: University of Southampton OAI PMH API
   description: Open Archives Initiative Protocol for Metadata Harvesting, version 2.0.
-  humanURL: https://data.southampton.ac.uk/
-  baseURL: https://data.southampton.ac.uk/
+  humanURL: https://eprints.soton.ac.uk/
+  baseURL: https://eprints.soton.ac.uk/cgi/oai2
   tags:
   - OAI-PMH
   properties:
