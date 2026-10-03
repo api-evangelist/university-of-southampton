@@ -112,36 +112,6 @@ paths:
                 type: string
 components:
   schemas:
-    OAIPMHResponse:
-      type: object
-      description: Root OAI-PMH envelope, namespace http://www.openarchives.org/OAI/2.0/.
-      properties:
-        responseDate:
-          type: string
-          format: date-time
-        request:
-          type: string
-          format: uri
-        error:
-          $ref: '#/components/schemas/OAIError'
-        Identify:
-          $ref: '#/components/schemas/Identify'
-    OAIError:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - badArgument
-          - badResumptionToken
-          - badVerb
-          - cannotDisseminateFormat
-          - idDoesNotExist
-          - noRecordsMatch
-          - noMetadataFormats
-          - noSetHierarchy
-        message:
-          type: string
     Identify:
       type: object
       description: Values below are those the live service returned on 2026-08-30.
@@ -177,3 +147,33 @@ components:
           type: string
           examples:
           - YYYY-MM-DDThh:mm:ssZ
+    OAIPMHResponse:
+      type: object
+      description: Root OAI-PMH envelope, namespace http://www.openarchives.org/OAI/2.0/.
+      properties:
+        responseDate:
+          type: string
+          format: date-time
+        request:
+          type: string
+          format: uri
+        error:
+          $ref: '#/components/schemas/OAIError'
+        Identify:
+          $ref: '#/components/schemas/Identify'
+    OAIError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - badArgument
+          - badResumptionToken
+          - badVerb
+          - cannotDisseminateFormat
+          - idDoesNotExist
+          - noRecordsMatch
+          - noMetadataFormats
+          - noSetHierarchy
+        message:
+          type: string
