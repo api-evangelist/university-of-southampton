@@ -53,12 +53,6 @@ components:
       properties:
         fileid:
           type: integer
-    Eprints:
-      type: object
-      description: Root of the EPrints data model, namespace http://eprints.org/ep2/data/2.0. Field set below is what the live service returned, not the full EPrints schema.
-      properties:
-        eprint:
-          $ref: '#/components/schemas/Eprint'
     Eprint:
       type: object
       properties:
@@ -70,6 +64,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Document'
+    Eprints:
+      type: object
+      description: Root of the EPrints data model, namespace http://eprints.org/ep2/data/2.0. Field set below is what the live service returned, not the full EPrints schema.
+      properties:
+        eprint:
+          $ref: '#/components/schemas/Eprint'
     Document:
       type: object
       properties:
