@@ -1,4 +1,4 @@
-# University of Southampton (university-of-southampton)
+# University of Southampton
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,48 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Southampton is a public research university in Southampton, United Kingdom, ranked #70 in the QS World University Rankings 2025 and a founding member of the Russell Group. A recognized pioneer of open and linked data in higher education, its developer footprint centers on the University of Southampton Open Data Service and the EPrints-based institutional research repository (ePrints Soton). Access is open and standards-based (SPARQL, RDF, OAI-PMH) rather than commercial key-gated APIs.
+The University of Southampton is a public research university in Southampton, United Kingdom, a founding member of the Russell Group and one of the few institutions in this cohort whose programmable footprint is genuinely its own engineering rather than a supplier's contract running under its name. Four institution-operated surfaces were found and verified by live probe on 2026-08-30. The University of Southampton Open Data Service at data.southampton.ac.uk, with persistent identifiers under id.southampton.ac.uk, publishes twenty-two datasets of campus, building, organisational, catalogue, transport and facilities data as five-star linked data under the Open Government Licence, reachable by content negotiation in Turtle, RDF/XML and N-Triples and by bulk dump per dataset. It is institution-built on tooling Southampton wrote, and it covers the campus-life and timetable classes that universities operate and almost never publish. The University runs its own Shibboleth 3.x SAML 2.0 Identity Provider, entityID https://webauth.soton.ac.uk/shibboleth, scope soton.ac.uk, registered in the Jisc UK Access Management Federation and reachable through eduGAIN. ePrints Soton, the institutional research repository, exposes a live open OAI-PMH 2.0 interface offering eight metadata formats including RIOXX v2.0, plus a read REST interface over the EPrints data model; the platform is EPrints 3.3.15, software developed at Southampton itself, so uniquely in this cohort neither the host nor the repository software belongs to a vendor. The University is a DataCite member in its own right with 6,735 DOIs minted under its own prefix 10.5258, and a Crossref member under prefix 10.22493. Two further surfaces are real but tenant-operated and are recorded as relationships without holding the supplier's specification: the Elsevier Pure CRIS tenancy at pure.soton.ac.uk, which is now the system of record for research deposit and whose public web services are switched off, and the Figshare research data tenancy at southampton.figshare.com. One prominent claim in the previous profile of this institution is now false and has been withdrawn. The public SPARQL endpoint at sparql.data.southampton.ac.uk is decommissioned: it answers every request with HTTP 200 and the body "Sorry, We no longer off a public SPARQL interface to Southampton Open Data", and the Open Data catalogue's own VoID metadata still advertises it. There is no central developer portal, no api.southampton.ac.uk and no public course, registrar or research-computing API. Access across the estate is open and standards-based rather than key-gated, and no surface publishes a version, changelog, status page or deprecation signal.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-southampton/refs/heads/main/apis.yml
-- Naftiko Run: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-southampton-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Russell Group · United Kingdom · Open Data · Linked Data · Research Repository · Identity Federation · OAI-PMH · Research · Course Catalog
 
-## Type
+## University of Southampton on APIs.io
 
-- Index / Consumer / 3rd-Party
+Everything profiled for University of Southampton is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/university-of-southampton/](https://apis.io/providers/university-of-southampton/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-Education, Higher Education, University, Open Data, Linked Data, SPARQL, OAI-PMH, Research, United Kingdom
+- [Shibboleth SAML Identity Provider (UK Access Management Federation)](https://apis.io/apis/university-of-southampton/shibboleth-saml-idp/) — The University's own Shibboleth 3.x Identity Provider, entityID https://webauth.soton.ac.uk/shibboleth, asserting shibmd:Scope soton.ac.uk. Its entity…
+- [Elsevier Pure CRIS tenancy](https://apis.io/apis/university-of-southampton/pure-cris-tenancy/) — The University's tenancy of Elsevier Pure, its Current Research Information System, at pure.soton.ac.uk. Pure is now the system of record: researchers…
+- [Figshare research data repository tenancy](https://apis.io/apis/university-of-southampton/figshare-tenancy/) — The University's tenancy of Figshare for research data, at southampton.figshare.com. Live and reachable but fronted by an AWS WAF bot challenge — HTTP 202…
+- [University of Southampton Catalogue API](https://apis.io/apis/university-of-southampton/university-of-southampton-catalogue-api/) — DCAT catalogue of the datasets the service publishes.
+- [University of Southampton Datasets API](https://apis.io/apis/university-of-southampton/university-of-southampton-datasets-api/) — Enumeration of the repository's exposed datasets.
+- [University of Southampton Eprints API](https://apis.io/apis/university-of-southampton/university-of-southampton-eprints-api/) — Individual repository records.
+- [University of Southampton OAI PMH API](https://apis.io/apis/university-of-southampton/university-of-southampton-oai-pmh-api/) — Open Archives Initiative Protocol for Metadata Harvesting, version 2.0.
+- [University of Southampton Resources API](https://apis.io/apis/university-of-southampton/university-of-southampton-resources-api/) — Dereferenceable resource URIs for campus concepts.
 
-## APIs
+### Published properties
 
-- **Open Data Service SPARQL Endpoint** — public SPARQL query endpoint over campus, building, organizational, and facilities linked data. Docs: https://www.data.southampton.ac.uk/faq.html (endpoint: https://sparql.data.southampton.ac.uk/)
-- **Open Data Linked Data (RDF) Service** — linked open data with RDF/XML, Turtle, N-Triples, CSV, KML, ICS, and RSS representations. Docs: https://data.southampton.ac.uk/
-- **ePrints Soton OAI-PMH Interface** — metadata harvesting for the institutional research repository (read-only search; new deposits via Pure). Docs: https://eprints.soton.ac.uk/
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Plans / Rate Limits / FinOps
+#### JSON-LD (1)
 
-- Plans: [plans/university-of-southampton-plans-pricing.yml](plans/university-of-southampton-plans-pricing.yml)
-- Rate Limits: [rate-limits/university-of-southampton-rate-limits.yml](rate-limits/university-of-southampton-rate-limits.yml)
-- FinOps: [finops/university-of-southampton-finops.yml](finops/university-of-southampton-finops.yml)
+Linked-data contexts for the provider's vocabulary.
 
-## Timestamps
+- [University Of Southampton Context](https://apis.io/jsonld/university-of-southampton/university-of-southampton-context/)
 
-- Created: 2026-06-03
-- Modified: 2026-06-03
+#### Governance rules (1)
 
-## Common Properties
+Spectral rulesets for the provider's contracts.
 
-- Website: https://www.southampton.ac.uk/
-- GitHub: https://github.com/southampton
-- LinkedIn: https://www.linkedin.com/school/university-of-southampton/
-- Developer Portal: https://data.southampton.ac.uk/
-- Source Code: https://github.com/southampton
+- [University of Southampton API Rules](https://apis.io/rules/university-of-southampton/university-of-southampton-rules/)
 
-## Notes
+#### Security (2)
 
-All catalogued URLs were probed on 2026-06-03. The Open Data portal, SPARQL endpoint, ePrints repository, and the github.com/southampton org resolved live (HTTP 200). The ePrints OAI-PMH endpoint is documented but returned HTTP 403 to automated probes (likely bot filtering) and is catalogued as documented-but-not-verified-live. The LinkedIn page returns LinkedIn's 999 anti-bot status but exists. No endpoints, keys, or pricing were fabricated.
+Authentication, trust centre, and vulnerability disclosure.
 
-## Maintainers
+- [University Of Southampton Authentication](https://apis.io/security/university-of-southampton/university-of-southampton-authentication/)
+- [University Of Southampton Domain Security](https://apis.io/security/university-of-southampton/university-of-southampton-domain-security/)
 
-- Kin Lane — kin@apievangelist.com
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [University Of Southampton Scopes](https://apis.io/scopes/university-of-southampton/university-of-southampton-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [University Of Southampton Plans Pricing](https://apis.io/plans/university-of-southampton/university-of-southampton-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [University Of Southampton Rate Limits](https://apis.io/rate-limits/university-of-southampton/university-of-southampton-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [University Of Southampton Finops](https://apis.io/finops/university-of-southampton/university-of-southampton-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.southampton.ac.uk/)
+- [Documentation](https://www.data.southampton.ac.uk/faq.html)
+- [Support](https://www.southampton.ac.uk/isolutions/)
+- [Blog](https://blog.soton.ac.uk/data/)
+- [Terms of service](https://www.southampton.ac.uk/about/governance/information-publications/publication-scheme)
+- [Privacy policy](https://www.southampton.ac.uk/about/governance/regulations-policies/privacy-policy)
+- [GitHub](https://github.com/southampton)
+
+## API Evangelist rating
+
+**Kin Score 35.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 19.9 |
+| Contract governance | 3.8 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 52.6 |
+
+**Agent readiness 20.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 34.3** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/university-of-southampton/](https://apis.io/providers/university-of-southampton/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for University of Southampton: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/university-of-southampton/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
